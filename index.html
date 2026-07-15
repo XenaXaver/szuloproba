@@ -177,6 +177,60 @@ const CHALLENGES = {
 };
 
 /* ============ JELENETEK ============ */
+
+/* ===== 5–10 ÉV: az alapozó évek ===== */
+const K6 = {
+  title:"Az iskolaválasztás",
+  text:"Itt az ovi utolsó éve, és mindenki ezt kérdezi: „Hova írattátok?” A körzetes, a „jó hírű”, a sok-délutános — mind mást ígér. Amit kevesen mondanak ki: elsőben nem iskolát választasz, hanem embert — egy tanítót, aki mellett a gyereked vagy megszereti a tanulást, vagy nem.",
+  choices:[
+    {label:"A leghíresebb suli a városban — kezdődjön korán a verseny.", fx:{kit:1, onb:-1},
+     cons:"Erős alap, korai hajtás. Csak figyeld a jeleket: hatévesen még nem versenyezni kell megtanulni, hanem megszeretni azt, ami az iskolában történik."},
+    {label:"Megnézem a tanítókat: oda megyünk, ahol olyan ember várja, aki mellett kivirul.", fx:{onb:1, kiv:1},
+     cons:"Az első tanító kezében van valami, amit tanterv nem pótol: az, hogy a gyereked hogyan gondol majd magára tanulóként — akár évtizedekig."},
+    {label:"A körzetes — közel van, és oda megy mindenki az oviból.", fx:{koz:1, kiv:-1},
+     cons:"A barátok sokat érnek, és lehet, hogy ez a jó döntés. Csak az ne döntsön helyetted, hogy ez a legkényelmesebb — a „mindegy, hova jár” üzenete hatévesen is átjön."}
+  ]
+};
+
+const K7 = {
+  title:"A képernyő",
+  text:"Hazaérsz: {gy} a tablet fölött görnyed — ma már sokadszor. Ismerős jelenet minden családban. A kérdés nem az, hogy legyen-e képernyő. Hanem hogy ki neveli a gyerekedet: te — vagy az ajánló-algoritmus?",
+  choices:[
+    {label:"Tiltás. Hétköznap semmi képernyő, és kész.", fx:{kit:1, kiv:-1},
+     cons:"A keret jót tesz — de a teljes tiltás a tiltott gyümölcs édességét adja, és a haveroknál úgyis pótolja. A cél nem a nulla, hanem a kontroll — ami előbb-utóbb az övé lesz."},
+    {label:"Keretek + együtt: van ideje, és néha melléülök — mutassa meg, mit néz, mit játszik.", fx:{kiv:1, koz:1},
+     cons:"Meglepő dolog derül ki: van, amiben kifejezetten ügyes. És mostantól nem ellenőr vagy, hanem partner — kamaszkorban ez lesz az aranyat érő különbség."},
+    {label:"Hagyom — legalább addig csendben van.", fx:{kit:-1},
+     cons:"A képernyő a legolcsóbb bébiszitter — és hosszú távon a legdrágább. Nem a gyerek választotta az algoritmust: az magától jött. Egy keret még belefér."}
+  ]
+};
+
+const K9 = {
+  title:"A harmadik különóra",
+  text:"Kedd délután. Az úszás és az angol mellé jönne a harmadik különóra — közben {gy} az ablakból nézi, ahogy a szomszéd gyerekek fociznak az udvaron. Rád néz. Nem mond semmit — de mindent mond.",
+  choices:[
+    {label:"Marad mind, és jön az új is — most kell mindent megalapozni.", fx:{kit:1, onb:-1},
+     cons:"Sok mindenhez ért majd. Csak azt figyeld, hol a határ: ahol a fejlesztésből futószalag lesz, ott elvész az, amiért az egész indult. A jókedve a műszerfalad."},
+    {label:"Egyet választunk — azt, amiben ragyog —, a többi idő az övé.", fx:{kit:1, kiv:1},
+     cons:"Egy dolog, amiben hétről hétre mélyül, plusz szabad idő, amiben magától talál ki dolgokat — ez a párosítás nevel. Se futószalag, se üresjárat: egyensúly."},
+    {label:"Elengedünk mindent — hadd legyen gyerek, majd eldönti később.", fx:{koz:1, kit:-1},
+     cons:"A szabad játék kincs, ebben igazad van. De ha SEMMI nincs, amiben rendszeresen gyakorol és fejlődik, az erőfeszítés öröme marad ki — és azt pótolni nehezebb, mint úszni megtanulni."}
+  ]
+};
+
+const K10 = {
+  title:"Az első igazi kudarc",
+  text:"{gy} hetek óta készül a versenyre — és kiesik az első körben. A kocsiban hazafelé végig sír. Most dől el valami fontos: azt, hogy mit jelent a kudarc, tőled tanulja meg.",
+  choices:[
+    {label:"Soha többet ilyen verseny — megvédem ettől az érzéstől.", fx:{kit:-1},
+     cons:"A szándék szeretet, az üzenet mégis ez: „a kudarc olyan szörnyű, hogy kerülni kell.” Pedig a kudarc nem ellenfél — tananyag. Kísérő kell mellé, nem testőr."},
+    {label:"Otthon átbeszéljük: mi ment jól, mi nem — és ő mit csinálna másképp.", fx:{onb:1, kit:1},
+     cons:"Másnapra a „kiestem”-ből „tudom, min múlt” lesz. Ebből a mondatból lesz felnőttkorban az: „nem jött össze — mit tanultam belőle?”"},
+    {label:"Nevezzünk újra — és ő döntse el, mikor áll ki megint.", fx:{onb:2}, gate:{stat:"onb", min:5,
+      note:"🔒 Ehhez az kellett volna, hogy az előző években több „képes vagyok rá” élmény gyűljön össze — az önbizalom nem a versenyen terem, hanem jóval előtte."},
+     cons:"Két hónap múlva magától mondja: „nevezz be újra.” A visszatérés a legerősebb győzelem — és ez már az övé."}
+  ]
+};
 /* S1 — az erősség első szikrája (erősségenként) */
 const S1 = {
   kez:{title:"A szétszedett robotporszívó",
@@ -356,6 +410,33 @@ const SON = {
   ]
 };
 
+/* ===== 15+ ÉV: a rajtvonal utáni évek ===== */
+const F19 = {
+  title:"Az elengedett kéz",
+  text:"{gy} elköltözött — kollégium, albérlet, első önálló hónapok. A lakás furcsán csendes. A kérdés már nem az, hogy mit engedsz meg neki. Hanem hogy milyen kapocs marad, amikor már nem te vagy a keret.",
+  choices:[
+    {label:"Naponta hívom — tudni akarom, hogy minden rendben van.", fx:{koz:1, onb:-1},
+     cons:"A törődés átjön — de a napi ellenőrzés azt is üzeni: „nem hiszem el, hogy megállsz a lábadon.” A jelenlét nem gyakoriság kérdése."},
+    {label:"Heti rituálé: vasárnap esti hívás — ott vagyok, de nem lihegek.", fx:{koz:2},
+     cons:"A vasárnapi hívás intézmény lesz. Nem kötelesség — kapaszkodó. És ha egyszer tényleg baj van, nem az jut eszébe, hogy „mit szólnak otthon” — hanem a telefonszámod."},
+    {label:"Majd jelentkezik, ha kell valami — felnőtt már.", fx:{onb:1, koz:-1},
+     cons:"Önállónak önálló. De a szabadság és a magára-hagyottság között hajszál a különbség: az, hogy tudja-e — van hová visszanyúlni. Mondd ki neki, ne csak gondold."}
+  ]
+};
+
+const F22 = {
+  title:"A nagy váltás",
+  text:"{gy} {kor} évesen felhív: fel akarja mondani a biztos első munkahelyét — jött egy bizonytalanabb, de izgalmasabb lehetőség. Nem engedélyt kér. Azt akarja tudni, mit gondolsz.",
+  choices:[
+    {label:"Maradj! Az első években a stabilitás mindennél többet ér.", fx:{kit:1, onb:-1},
+     cons:"Lehet, hogy igazad van — de ha a TE félelmed dönt az Ő élete helyett, azt később mindketten megérzitek. A tanács akkor ér a legtöbbet, ha kérdésekkel kezdődik."},
+    {label:"Nem tanácsolok — kérdezek: mi húz oda? Mi tart itt? Mi a legrosszabb, ami történhet?", fx:{onb:1, kiv:1},
+     cons:"A harmadik kérdésnél hallod, ahogy a hangja megnyugszik. A döntést ő hozza meg — de veled gondolkodta végig. Ennél több egy szülőnek ilyenkor nem jár. És nem is kell."},
+    {label:"„Bármit döntesz, mögötted állunk” — mondom, kérdés nélkül.", fx:{koz:1},
+     cons:"A feltétlen támogatás sokat ér — de a „bármit csinálsz, jó” olcsóvá is válhat. A mögötte-állás akkor a legerősebb, ha előtte végig is gondoltátok együtt."}
+  ]
+};
+
 /* S6 — a visszatekintés (a gyerek {kor} éves) */
 const S6 = {
   title:"„Jó úton vagyok?”",
@@ -455,23 +536,22 @@ function startGame(){
   S.name = ($("pname").value || "").trim();
   const a = parseInt($("page").value, 10);
   if(!a || a < 1 || a > 25){ $("page").focus(); $("page").style.borderColor = "var(--c3)"; return; }
-  if(a < 6) return renderTooYoung(a, "A legkisebbeknek külön verzió készül — tele játékkal, mesével, korai erősség-jelekkel.");
-  if(a < 11) return renderTooYoung(a, "A 6–10 éveseknek saját verzió készül — az alapozó évekről, ahol most vagytok.");
-  if(a > 14) return renderTooYoung(a, "A nagyoknak (15+) saját verzió készül — az egyetem–szakma–külföld nagy kérdéseiről.");
+  if(a < 5) return renderTooYoung(a, 5, "A legkisebbeknek külön verzió készül — addig az 5 évesekét ajánljuk: ott az első nagy döntés az iskolaválasztás.", "Hamarosan nálatok is! 🌱");
+  if(a > 18) return renderTooYoung(a, 15, "Ő már (majdnem) felnőtt — de a játék így is tanulságos: nézd meg, te mit tennél ma másképp.", "Ezt a tíz évet már éltétek 💛");
   S.age = a;
   renderStrength();
 }
 
-function renderTooYoung(a, msg){
-  S.age = a;
+function renderTooYoung(a, target, msg, cim){
+  S.age = a; S._target = target;
   $("screen").innerHTML = `
     <div class="card">
-      <h2>Hamarosan nálatok is! 🌱</h2>
+      <h2>${cim}</h2>
       <p class="story">${msg}</p>
-      <p class="hint">Hagyd itt az emailed, és elsőként szólunk, amint kész — addig pedig kipróbálhatod a mostani verziót úgy, mintha ${gyName()} már ${a<11?11:14} éves lenne.</p>
+      <p class="hint">Hagyd itt az emailed, és szólunk, amint a hozzátok illő verzió elkészül — addig kipróbálhatod így: mintha ${gyName()} most ${target} éves lenne.</p>
       <input class="fin" id="waitmail" type="email" placeholder="Email — értesítést kérek">
       <button class="next" onclick="waitlist()">Értesítsetek! ✉️</button>
-      <button class="ghost" onclick="S.age=${a<11?11:14}; renderStrength()">Kipróbálom így is →</button>
+      <button class="ghost" onclick="S.age=S._target; renderStrength()">Kipróbálom így is →</button>
     </div>`;
 }
 
@@ -483,7 +563,7 @@ function waitlist(){
     <div class="card"><h2>Köszönjük! 💛</h2>
     <p class="story">Szólunk, amint a korosztályotok verziója elkészül. Addig is: gyere el egy ingyenes szülői estünkre!</p>
     <button class="next" onclick="window.open(CONFIG.ctaUrl,'_blank')">Megnézem az eseményeket →</button>
-    <button class="ghost" onclick="S.age=${S.age<11?11:14}; renderStrength()">Kipróbálom a játékot így is →</button></div>`;
+    <button class="ghost" onclick="S.age=S._target; renderStrength()">Kipróbálom a játékot így is →</button></div>`;
 }
 
 /* ---- intake 1: erősség ---- */
@@ -543,21 +623,33 @@ function pickChallenge(k){
    aki 14-nél, az már átugrotta — nála a beilleszkedés indít, és több jut a fiatal
    felnőtt évekből. A kérdések száma ezért 6 és 8 között változhat — ez szándékos. */
 const TIMELINE = () => [
+  {ev: K6,  age: 6},                                // iskolaválasztás (ovi vége)
+  {ev: K7,  age: 7},                                // a képernyő
+  {ev: K9,  age: 9},                                // különóra vs. szabad idő — az egyensúly
+  {ev: K10, age: 10},                               // az első igazi kudarc
   {ev: S1[S.strength], age: 12},                    // az erősség első szikrája
   {ev: S2, age: 13},                                // a felvételi éve
   {ev: SBE, age: 14},                               // beilleszkedés a középiskolába
   {ev: {...S3[S.challenge], bridge:true}, age: 16}, // a kihívás éve
   {ev: S4, age: 17},                                // a „majd holnap” estéje
   {ev: S5, age: 18},                                // a rajtvonal
-  {ev: SON, age: 20}                                // az első önálló évek
+  {ev: F19, age: 19, minA: 14},                     // az elengedett kéz (csak nagyobb belépőknél)
+  {ev: SON, age: 20},                               // az első önálló évek
+  {ev: F22, age: 22}                                // a nagy váltás
 ];
+
+function s6Text(kor){
+  if(kor <= 16) return "{gy} már {kor} éves. Egy este leül melléd — és most nem a suliról kérdez, hanem magáról: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.";
+  if(kor <= 21) return "{gy} már {kor} éves. Az évfolyamtársai szétszéledtek — egyetem, munka, külföld; ki hol tart. Egy este leül veled: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.";
+  return "{gy} {kor} éves — az élete rég beindult: munka, kapcsolatok, saját döntések. Mégis egy este felhív: „Szerinted jó úton vagyok?” Van kérdés, amit az ember mindig a szüleinek tesz fel. Tíz éved döntései érnek össze ebben a percben.";
+}
 
 function buildSeq(){
   const A = S.age;
   const seq = TIMELINE()
-    .filter(b => b.age >= A && b.age <= A + 8)      // ami az ablakba esik
+    .filter(b => b.age >= A && b.age <= A + 8 && (!b.minA || A >= b.minA))
     .map(b => ({...b.ev, y: b.age - A}));
-  seq.push({...S6, y: 9});                          // a visszatekintés mindig zár (2035)
+  seq.push({...S6, y: 9, text: s6Text(A + 9)});     // a visszatekintés mindig zár (2035)
   seq.sort((a,b) => a.y - b.y);
   S.seq = seq;
 }
