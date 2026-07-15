@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Szülőpróba — Future Tour</title>
+<meta name="description" content="Éld le a gyereked következő 10 évét — 10 percben. Milyen felnőtt lesz belőle? Játszd végig a Szülőpróbát.">
+<style>
+  :root{
+    --bg:#0b0f1a; --card:#141a2b; --card2:#1a2138; --line:#26304e;
+    --text:#eef2ff; --muted:#93a0c4;
+    --c1:#22d3ee; --c2:#a78bfa; --c3:#f472b6; --gold:#fbbf24;
+    --grad:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    min-height:100%;}
+  body{background:
+    radial-gradient(1200px 500px at 80% -10%, rgba(167,139,250,.14), transparent 60%),
+    radial-gradient(900px 400px at 10% 110%, rgba(34,211,238,.10), transparent 60%),
+    var(--bg);}
+  #app{max-width:540px; margin:0 auto; padding:16px 16px 40px; min-height:100vh; display:flex; flex-direction:column;}
+
+  header{padding:6px 2px 14px;}
+  .brand{display:flex; align-items:center; justify-content:space-between; gap:8px;}
+  .brand .logo{font-weight:800; letter-spacing:.5px; font-size:15px; color:var(--muted); white-space:nowrap;}
+  .brand .logo b{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .yearbig{font-size:15px; font-weight:800; color:var(--gold); font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .timeline{margin-top:10px; height:6px; border-radius:3px; background:var(--line); overflow:hidden;}
+  .timeline i{display:block; height:100%; width:0%; background:var(--grad); border-radius:3px;
+    transition:width .8s cubic-bezier(.22,1,.36,1);}
+  .tlyears{display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-top:4px;
+    font-variant-numeric:tabular-nums;}
+
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:4px 0 14px;}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:7px 6px 8px; text-align:center;}
+  .stat .se{font-size:16px; line-height:1;}
+  .stat .sn{font-size:9px; color:var(--muted); margin:3px 0 5px; letter-spacing:.2px; white-space:nowrap;}
+  .sbar{height:5px; background:var(--line); border-radius:3px; overflow:hidden;}
+  .sbar i{display:block; height:100%; border-radius:3px; transition:width .7s ease;}
+  .s-kit i{background:var(--c1);} .s-koz i{background:var(--c3);}
+  .s-kiv i{background:var(--c2);} .s-onb i{background:var(--gold);}
+  .stat.bump{animation:bump .5s ease;}
+  @keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:20px;
+    animation:in .45s cubic-bezier(.22,1,.36,1); margin-bottom:14px;}
+  @keyframes in{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+  .yearchip{display:inline-block; font-size:12px; font-weight:800; color:#0b0f1a;
+    background:var(--gold); border-radius:999px; padding:3px 10px; margin-bottom:10px;}
+  h1{font-size:26px; margin:6px 0 10px; line-height:1.2;}
+  h2{font-size:20px; margin:2px 0 10px; line-height:1.25;}
+  .story{font-size:16px; line-height:1.55; color:var(--text);}
+  .flavor{font-size:14px; line-height:1.5; color:var(--muted); font-style:italic; margin-top:10px;}
+  .hint{font-size:13px; color:var(--muted); line-height:1.45; margin-top:8px;}
+  .choices{display:flex; flex-direction:column; gap:10px; margin-top:18px;}
+  button{font:inherit; cursor:pointer;}
+  .choice{width:100%; text-align:left; background:var(--card2); color:var(--text);
+    border:1px solid var(--line); border-radius:14px; padding:14px 16px; font-size:15px; line-height:1.4;
+    transition:transform .12s ease, border-color .12s ease;}
+  .choice:active{transform:scale(.98);}
+  .choice:hover{border-color:var(--c2);}
+  .choice.locked{color:var(--muted); border-style:dashed;}
+  .choice.shake{animation:shake .4s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+  .locknote{display:none; font-size:13px; color:var(--gold); margin-top:8px; line-height:1.45;}
+  .locknote.show{display:block; animation:in .3s ease;}
+
+  .cons{font-size:16px; line-height:1.55;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+  .chip{font-size:13px; font-weight:700; border-radius:999px; padding:5px 12px;
+    background:rgba(34,211,238,.12); border:1px solid rgba(34,211,238,.4); color:var(--c1);
+    animation:in .4s ease;}
+  .chip.neg{background:rgba(244,114,182,.10); border-color:rgba(244,114,182,.45); color:var(--c3);}
+  .next{display:block; width:100%; margin-top:18px; background:var(--grad); color:#0b0f1a;
+    font-weight:800; font-size:16px; border:none; border-radius:14px; padding:15px;
+    transition:transform .12s ease;}
+  .next:active{transform:scale(.98);}
+  .ghost{display:block; width:100%; margin-top:10px; background:transparent; color:var(--muted);
+    border:1px solid var(--line); border-radius:14px; padding:13px; font-size:14px;}
+
+  .hero{text-align:center; padding:26px 0 6px;}
+  .hero .big{font-size:44px;}
+  .hero h1{font-size:32px; margin:10px 0 4px;}
+  .hero h1 span{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero .sub{color:var(--muted); font-size:15px; line-height:1.55; max-width:430px; margin:0 auto;}
+  .namefield{width:100%; margin-top:14px; background:var(--card2); border:1px solid var(--line);
+    color:var(--text); border-radius:14px; padding:13px 16px; font-size:15px; text-align:center; outline:none;}
+  .namefield:focus{border-color:var(--c2);}
+  .pathbtn{display:flex; gap:14px; align-items:center;}
+  .pathbtn .pe{font-size:26px;}
+  .pathbtn .pt b{display:block; font-size:16px; margin-bottom:2px;}
+  .pathbtn .pt span{font-size:13px; color:var(--muted); line-height:1.35; display:block;}
+
+  .profile{text-align:center;}
+  .arch-emoji{font-size:56px; margin:4px 0;}
+  .arch-name{font-size:28px; font-weight:800; background:var(--grad);
+    -webkit-background-clip:text; background-clip:text; color:transparent; margin:2px 0 8px;}
+  .arch-desc{font-size:15px; line-height:1.55; color:var(--text); max-width:430px; margin:0 auto;}
+  .score{margin:18px auto 4px; font-size:13px; color:var(--muted);}
+  .scorenum{font-size:38px; font-weight:800; color:var(--gold); font-variant-numeric:tabular-nums;}
+  .pbars{margin-top:14px; display:flex; flex-direction:column; gap:9px; text-align:left;}
+  .pbar{display:grid; grid-template-columns:120px 1fr 24px; gap:10px; align-items:center; font-size:13px;}
+  .pbar .pb{height:9px; background:var(--line); border-radius:5px; overflow:hidden;}
+  .pbar .pb i{display:block; height:100%; border-radius:5px; width:0; transition:width 1s ease .3s;}
+  .pbar .pv{color:var(--muted); text-align:right; font-variant-numeric:tabular-nums;}
+  .tipbox{margin-top:16px; text-align:left; background:var(--card2); border:1px solid var(--line);
+    border-radius:14px; padding:14px 16px; font-size:14px; line-height:1.5;}
+  .tipbox b{color:var(--gold);}
+  .recap{margin-top:16px; text-align:left; font-size:13px; color:var(--muted); line-height:1.7;}
+  .recap b{color:var(--text);}
+  .disclaim{margin-top:14px; font-size:12px; color:var(--muted); line-height:1.5;}
+
+  /* form */
+  .formcard h2{font-size:18px;}
+  .fin{width:100%; margin-top:10px; background:var(--card2); border:1px solid var(--line);
+    color:var(--text); border-radius:12px; padding:12px 14px; font-size:14px; outline:none;}
+  .fin:focus{border-color:var(--c2);}
+  textarea.fin{min-height:74px; resize:vertical; font-family:inherit;}
+  .chk{display:flex; gap:10px; align-items:flex-start; margin-top:10px; font-size:13px; color:var(--muted);
+    line-height:1.4; cursor:pointer;}
+  .chk input{margin-top:2px; accent-color:#a78bfa;}
+  .gdpr{font-size:11px; color:var(--muted); margin-top:12px; line-height:1.5;}
+
+  footer{margin-top:auto; padding-top:26px; text-align:center; font-size:12px; color:var(--muted);}
+  footer a{color:var(--c1); text-decoration:none;}
+
+  .cf{position:fixed; top:-12px; width:9px; height:14px; border-radius:2px; z-index:9;
+    animation:fall linear forwards; pointer-events:none;}
+  @keyframes fall{to{transform:translateY(105vh) rotate(720deg); opacity:.7;}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand">
+      <div class="logo">🧭 <b>SZÜLŐPRÓBA</b></div>
+      <div class="yearbig" id="yearbig"></div>
+    </div>
+    <div class="timeline"><i id="tlfill"></i></div>
+    <div class="tlyears"><span>2026</span><span>2031</span><span>2036</span></div>
+  </header>
+  <div class="stats" id="statsrow" style="display:none"></div>
+  <main id="screen"></main>
+  <footer>Future Tour — hallgasd meg élőben is · <a href="https://futuretour.app" target="_blank" rel="noopener">futuretour.app</a></footer>
+</div>
+
+<script>
+/* ============ KONFIG — szabadon átírható ============ */
+const CONFIG = {
+  ctaUrl: "https://futuretour.app",
+  formEndpoint: "",                     // ← IDE jön majd a Brevo/webhook URL; amíg üres, emailben megy
+  fallbackEmail: "renata@sas.ac"        // ← amíg nincs endpoint, ide érkeznek a béta-válaszok
+};
+
+/* ============ STATOK ============ */
+const STATS = {
+  kit:{e:"💪", n:"Kitartás"},
+  onb:{e:"✨", n:"Önbizalom"},
+  kiv:{e:"🔍", n:"Kíváncsiság"},
+  koz:{e:"🤝", n:"Közösség"}
+};
+
+/* ============ INTAKE — 2 kör ============ */
+const STRENGTHS = {
+  kez:{e:"🔧", n:"A keze és a szeme", tag:"Épít, szerel, rajzol — kézzel gondolkodik.", boost:"kiv", akt:"a heti műhelyszakkör"},
+  kif:{e:"🎭", n:"A kifejezés", tag:"Színpad, szó, zene — ha figyelnek rá, kivirul.", boost:"onb", akt:"a heti próba"},
+  fej:{e:"⚡", n:"A feje", tag:"Gyorsan kapcsol, mindent átlát — néha túl gyorsan is.", boost:"kiv", akt:"a heti edzés"},
+  emb:{e:"🤝", n:"Az emberek", tag:"Érzi a többieket: összehoz, békít, visz.", boost:"koz", akt:"a heti edzés"}
+};
+const CHALLENGES = {
+  porgo:{e:"🌪️", n:"Nem bír megülni", tag:"Tele energiával, elkalandozik, pörög.", seed:"kit"},
+  unja:{e:"😴", n:"Hamar felad — vagy unja", tag:"Ha nem megy elsőre, otthagyja. Vagy minden túl könnyű neki.", seed:"kit"},
+  szorong:{e:"😰", n:"Magához szigorú", tag:"A hibáin méri magát, szorong a megfelelésen.", seed:"onb"},
+  vissza:{e:"🐢", n:"Visszahúzódik", tag:"Nehezen nyílik, kevés az igazi barát.", seed:"koz"}
+};
+
+/* ============ JELENETEK ============ */
+/* S1 — az erősség első szikrája (erősségenként) */
+const S1 = {
+  kez:{title:"A szétszedett robotporszívó",
+    text:"Hazaérsz: {gy} a nappali közepén ül, körülötte a robotporszívó — darabokban. „Meg akartam nézni, hogyan gondolkodik.” A holnapi lecke a táskában, érintetlenül.",
+    choices:[
+      {label:"Előbb a lecke — a szerelés jutalom, ha végzett.", fx:{kit:1, kiv:-1},
+       cons:"Rend lesz, és a lecke is meglesz. Csak arra figyelj, hogy a „jutalom” szóval ne fokozd le azt, ami valójában a legnagyobb ereje."},
+      {label:"Leülök mellé: rakjuk össze együtt, és közben megmérjük, kiszámoljuk.", fx:{kiv:2},
+       cons:"Kiderül, hogy a matek nem a füzetből megy a fejébe, hanem a kezéből. Ezt a délutánt évek múlva is emlegetni fogja."},
+      {label:"Lefotózom, kiposztolom: micsoda zseni! Hadd csinálja szabadon.", fx:{onb:1, kit:-1},
+       cons:"A taps jólesik neki — de a taps önmagában elillan. A hit mellé feladat is kell: valami, amin megdolgozik. Hinni benne az első lépés, nem az egyetlen."}
+    ]},
+  kif:{title:"A főszerep és a bizonyítvány",
+    text:"{gy} ragyogva jön haza: övé a főszerep az iskolai darabban. Ugyanaznap érkezik az ellenőrzőbe két hármas és egy megjegyzés: „az órán szerepel, nem figyel”.",
+    choices:[
+      {label:"Előbb a jegyek. A színpad jutalom lesz, ha javít.", fx:{kit:1, onb:-1},
+       cons:"Javít a jegyein — és megtanul valamit, amit nem akartál tanítani: hogy amiben ragyog, az csak dísz. Pedig az a fény egyszer még kenyeret is adhat."},
+      {label:"Ott ülök az első sorban, és a leghangosabban tapsolok.", fx:{onb:2},
+       cons:"A színpadról meglát a nézőtéren. Az a pillanat — hogy valaki büszke rá abban, amiben a legjobb — évekig fogja tartani."},
+      {label:"Taps ÉS terhelés: beíratom egy komolyabb műhelybe, ahol nem ő a legjobb.", fx:{kit:1, onb:1},
+       cons:"Először megszeppen: itt mindenki tud valamit. Aztán elkezd nőni. A tehetség tapsból él — de kihívástól fejlődik."}
+    ]},
+  fej:{title:"Öt perc alatt kész",
+    text:"A házi feladat {gy} számára öt perc. Az órákon unatkozik, mégis mindenből jó. A tanárok elégedettek. Te viszont látod: soha semmiért nem kellett még megküzdenie.",
+    choices:[
+      {label:"Örülök neki — okos gyerek, legalább nem stresszel.", fx:{onb:1, kit:-1},
+       cons:"Most könnyű mindenkinek. De aki sosem küzd meg semmiért, az nem tanulja meg, milyen átlendülni a nehezén — és a nehéz egyszer mindenkinek megérkezik."},
+      {label:"Falat keresek neki: verseny, emelt szint — valami, ami NEM megy elsőre.", fx:{kit:2},
+       cons:"Az első kudarcnál majdnem feladja. Aztán ottmarad. Amit most tanul — hogy a „nem megy” után van folytatás — azt a talentum önmagában sosem adná meg."},
+      {label:"Megkérem: tanítsa meg a padtársának. Aki tanít, kétszer tanul.", fx:{koz:1, kiv:1},
+       cons:"Kiderül: elmagyarázni nehezebb, mint tudni. És közben történik valami váratlan — barátja lesz."}
+    ]},
+  emb:{title:"Az osztály motorja",
+    text:"{gy} mindenkit ismer, mindent ő szervez, az osztály nélküle meg se mozdul. Közben a jegyei csúsznak — „majd megbeszélem a tanárral” — és tényleg megbeszéli.",
+    choices:[
+      {label:"Kevesebb szervezkedés, több tanulás — a barátok megvárják.", fx:{kit:1, koz:-1},
+       cons:"A jegyek rendbe jönnek. Csak közben halkul valami, ami ritkább kincs, mint a jó bizonyítvány. Vigyázz, ki ne kapcsold — hangold."},
+      {label:"A tehetségét teszem feladattá: vigye ő az osztályprojektet — felelősséggel, határidővel.", fx:{koz:1, kit:1},
+       cons:"Az első határidőt elcsúszza, a másodikat hozza. A szervezkedésből szervezés lett — a játékból képesség."},
+      {label:"Hagyom — ez a tehetsége, kár lenne belenyúlni.", fx:{onb:1, kit:-1},
+       cons:"Szárnyal a közösségben. De a tehetség irány nélkül csak forog. Hinni benne az első lépés — a második, hogy célt is kap."}
+    ]}
+};
+
+/* S2 — a középiskola-döntés (14 évesen, erősség-ízzel) */
+const S2 = {
+  title:"A nagy döntés: középiskola",
+  text:"Elérkezett a felvételi éve. {gy} {kor} éves, és el kell dönteni, hol tanul tovább. A rokonok, a tanárok, az internet — mindenki tudja a „helyes” választ. Csak épp mind mást.",
+  flavor:{
+    kez:"A műszaki suli nyílt napján felragyogott. A „jó nevű” gimié előtt csak hallgatott.",
+    kif:"Van egy hely, ahol dráma-tagozat van. És van egy, aminek a neve jól mutat majd — bárhol.",
+    fej:"Bárhova felvennék. Pont ez a csapda: ha minden ajtó nyitva, könnyű a legfényesebbet választani a legjobb helyett.",
+    emb:"Neki nem a tanterv számít, hanem hogy kikkel. És pont ezt nem írja egyetlen rangsor sem."
+  },
+  choices:[
+    {label:"Az elit gimnázium — a legerősebb papír, minden kapu nyitva marad.", fx:{kit:1, onb:-1}, school:"elit",
+     cons:"Erős hely, erős mezőny — sokat fog fejlődni. Egy dologra figyelj: a rangsor ne váljon mércévé otthon is. A gyereked nem egy helyezés."},
+    {label:"A hely, ahol az erőssége tantárgy — még ha messzebb is van, és senkit sem ismer ott.", fx:{onb:1, kiv:1}, school:"sajat",
+     cons:"Az utazás fárasztó, az újrakezdés ijesztő. De életében először az iskola olyan, mintha róla szólna. Megéri a vonatjegyet."},
+    {label:"A közeli, megszokott — a haverok is oda mennek, mindenkinek egyszerűbb.", fx:{koz:1, kiv:-1}, school:"kozeli",
+     cons:"Van, amikor tényleg a közeli a jó válasz. De ha csak kényelemből az, a gyerek is megérzi az üzenetét: „mindegy, hova mész.” Pedig nem mindegy."}
+  ]
+};
+
+/* SBE — beilleszkedés az új középiskolába (14 évesen; a 14 évvel belépőknek ez az első jelenet) */
+const SBE = {
+  title:"Az első hetek az új suliban",
+  text:"{gy} megkezdte a középiskolát: új arcok, új tanárok, magasabb mérce. Este szűkszavú. Nem baj van — csak minden új egyszerre. Te mit teszel ezekben a hetekben?",
+  choices:[
+    {label:"Az első rossz jegynél azonnal különtanár — nehogy lemaradjon.", fx:{kit:1, onb:-1},
+     cons:"A jegy rendbe jön. Csak az üzenetre figyelj, ami vele megy: „nem bízunk benne, hogy egyedül megoldja.” Néha a kivárás is nevelés."},
+    {label:"Két hétig csak kérdezek: kikkel ebédelt, mi volt jó ma — a jegyekről szó sem esik.", fx:{koz:1, onb:1},
+     cons:"Előbb ember, aztán tanuló. Aki biztonságban érzi magát, az teljesíteni is fog — ez a sorrend, és nem fordítva."},
+    {label:"Mélyvíz: szakkör, sport, diákkör — minél előbb legyen saját terepe.", fx:{kiv:1, koz:1},
+     cons:"Az első hetekben nyűgös érte. Fél év múlva pont ez a „saját terep” lesz az oka, hogy szeret odajárni."}
+  ]
+};
+
+/* híd-mondatok: a suliválasztás visszaköszön a későbbi jelenetekben (folytonosság) */
+const BRIDGES = {
+  elit:"Az erős gimiben kemény a tempó — pörögnek a hetek.",
+  sajat:"Az új, távolabbi suliban végre otthon van — még ha az utazás fárasztó is.",
+  kozeli:"A megszokott suli kényelmes, körülötte a régi arcok — minden megy a maga útján."
+};
+
+/* S3 — a kihívás-jelenet (kihívásonként, ~középiskola közepe) */
+const S3 = {
+  porgo:{title:"Három tanár, egy panasz",
+    text:"Egy hónapon belül három tanár is jelez: {gy} „nem bír megülni, szétszedi az órát”. Otthon közben fél délután alatt összerak egy működő áramkört. Nem rossz gyerek — csak sok neki az ülés.",
+    choices:[
+      {label:"Majd kinövi — kamaszkor, mindenki ilyen volt.", fx:{koz:-1},
+       cons:"Nem növi ki magától — csak rákerül egy címke: „a problémás”. És a címke ragad. Ennek a gyereknek nem kevesebb figyelem kell, hanem irány."},
+      {label:"Az energiának kiutat keresek: sport, robotika, színpad — ami tényleg leköti.", fx:{kit:1, kiv:1},
+       cons:"Ahol pörögni szabad, ott a „sok” hirtelen hajtóerő lesz. Nem a gyerek volt túl sok — a mozgástér volt túl kevés."},
+      {label:"Környezetet nézünk: előbb szakemberrel, aztán ha kell, másik osztály vagy befogadóbb közösség.", fx:{koz:1},
+       cons:"Kiderül, mi segít valójában — és az szinte sosem a kevesebb közösség, hanem a jobb. A gyors megoldás helyett a jót választottad, pedig az a nehezebb."}
+    ]},
+  unja:{title:"A fal, ami még nem jött el",
+    text:"Az első félév simán megy — {gy} mindent kapásból megold. Tanulni sosem látod. „Minek, úgyis tudom.” És igaza van. Egyelőre.",
+    choices:[
+      {label:"Örülök — legalább nem stresszel. Majd tanul, ha kell.", fx:{kit:-1},
+       cons:"A fal egyszer mindenkinek megérkezik — érettségin, egyetemen, munkában. Aki előtte sosem küzdött, annak nem a tudása kevés ott, hanem a gyakorlata a küzdelemben."},
+      {label:"Falat építek neki én — emelt szint, verseny, valami, ahol a tehetség kevés. Most, amíg olcsó a hiba.", fx:{kit:2},
+       cons:"Először dühös: „minek ez nekem?” Aztán egyszer nem megy elsőre valami — és másodszorra megcsinálja. Ez az érzés, az átlendülés öröme, mostantól az övé."},
+      {label:"Megkeresem, mi érdekli IGAZÁN — és abban engedem olyan mélyre, ahol már neki is nehéz.", fx:{kiv:1, kit:1},
+       cons:"A saját témájában önként megy neki a falnak — és élvezi. A kíváncsiság a legjobb edző: nem kell hajtani azt, akit húz valami."}
+    ]},
+  szorong:{title:"A dolgozat előtti este",
+    text:"Este tíz van, és {gy} a kilencedik kört futja a jegyzetei fölött, gyomorfájásra panaszkodik. Nem a tudása kevés — a hibától fél. Holnap dolgozat, és ő már ma elbukott ezerszer, fejben.",
+    choices:[
+      {label:"Kiveszem a nyomás alól: felmentés, kimentés — csak ne szenvedjen.", fx:{kit:-1},
+       cons:"Ma este megkönnyebbül. De a félelem nem tűnik el attól, hogy kerüljük — csak nő. A védelem jólesik ma, és gyengít holnap."},
+      {label:"Kis tétekben edzünk hibázni — és elmesélem a saját legnagyobb bakimat is.", fx:{onb:2},
+       cons:"Amikor meghallja, hogy TE is rontottál el nagyot — és túlélted —, valami enged benne. A hiba nem a világ vége. Bizonyíték rá a saját szülője."},
+      {label:"Több gyakorlás kell — ha elég felkészült, majd megnyugszik.", fx:{kit:1, onb:-1},
+       cons:"Készül még többet — és még többet fél. A szorongást nem a tudás hiánya okozza, hanem a mérce. A terhelés jó szolga, de itt nem ez a zár kulcsa."}
+    ]},
+  vissza:{title:"A zárt ajtó",
+    text:"Eltelt az első félév, és {gy} még senkit sem hívott át magához. Délutánonként a szobájában van, „a barátaim online vannak”. Nem boldogtalan. De egyre halkabb.",
+    choices:[
+      {label:"Beíratom egy nagy csapatsportba — majd ott megtanul ismerkedni.", fx:{onb:-1, koz:1},
+       cons:"Jár, mert kell. Közösség lett — csak nem az övé. A tömeg nem gyógyítja a magányt, néha még hangosabbá teszi. Az ajtót nem kifelé kell törni, hanem belülről nyitni."},
+      {label:"A SAJÁT témája mentén keresek neki kis kört: szakkör, tábor, ahol a közös téma a jégtörő.", fx:{koz:2},
+       cons:"Ahol a téma közös, a beszélgetés magától indul. Három hét múlva először mondja: „átjöhet valaki?” Nem társaságot adtál neki — kapcsolódást."},
+      {label:"Hagyom — online is emberek vannak, ez az ő világa.", fx:{kiv:1, koz:-1},
+       cons:"Részben igazad van: ott is barátok, ott is közösség. De a képernyő nem tanít kézfogást, vitát, kibékülést. A fele megvan — a másik felét neked kell odaépíteni."}
+    ]},
+};
+
+/* S4 — közös: a „majd holnap” (kényelem-csapda hétköznapi éle) */
+const S4 = {
+  title:"„Ma nem megyek”",
+  text:"{akt} estéje, {gy} a kanapén: „Ma hagyjuk ki. Fáradt vagyok.” Nem beteg, nem történt semmi. Egyszerűen nincs kedve. Ismerős?",
+  choices:[
+    {label:"Hagyom, pihenjen — egy kihagyás igazán belefér.", fx:{kit:-1},
+     cons:"Belefér. Aztán jövő héten kettő fér bele. A feladás is izom — és az is edződik, minden egyes „majd holnap”-pal. Nem a mai este a tét, hanem a minta."},
+    {label:"Megyünk, fáradtan is — sokszor csak elindulni nincs kedv. Hazafelé azért rákérdezek: fáradt voltál, vagy nem jó ott?", fx:{kit:2},
+     cons:"Kiderül: tényleg csak az elindulás volt nehéz — a végére felpörgött. De a kérdésed a fontosabb: ha egyszer valóban rossz helyen lesz, tudni fogja, hogy neked el lehet mondani."},
+    {label:"Szólok a csapattársának: menjenek együtt — társakkal minden könnyebb.", fx:{koz:1, kit:1},
+     gate:{stat:"koz", min:5, note:"🔒 Ez az út azoknak nyílik meg, akiknél a barátok végig ott voltak a döntésekben — a közösség nem vészhelyzetben épül, hanem előtte."},
+     cons:"A haver becsönget, {gy} felpattan. Amit az akaraterő nem húz el, azt a barátság elviszi. Ezért éri meg közösséget építeni — előre."}
+  ]
+};
+
+/* S5 — 18 évesen: a rajtvonal */
+const S5 = {
+  title:"A rajtvonal",
+  text:"{gy} 18 éves. Érettségi előtt ülepszik a nagy kérdés: egyetem? szakma? munka? külföld? Mindenkinek van véleménye. De ez már az ő élete — te legfeljebb az utolsó métereken igazíthatsz.",
+  flavor:{
+    kez:"A keze már most pénzt érne — de a fejében is több van, mint hinné.",
+    kif:"A színpad hívja, a „biztos pálya” meg nyomasztja. Mindkét irányba van jegye.",
+    fej:"Bárhová felvennék. A kérdés nem az, hogy MIT tud — hanem hogy MIT akar.",
+    emb:"Akárhová megy, ott közösség lesz körülötte. A kérdés: mire használja?"
+  },
+  choices:[
+    {label:"A saját, merészebb tervét választja — mert elhiszi magáról, hogy képes rá.", fx:{onb:1, kiv:1},
+     gate:{stat:"onb", min:7, note:"🔒 Ehhez az kellett volna, hogy elhiggye: képes rá. Az önbizalom nem 18 évesen terem — az előző tíz évben épül. Ezért számított minden korábbi döntés."},
+     cons:"Kockázatos, és te is nyelsz egyet. De egy fiatal, aki mer a saját tervére tenni, már megnyerte a legfontosabbat: ő dönt a saját életéről."},
+    {label:"Biztos alap, ami az erősségére épül — egyetem vagy szakma, de az Ő terepén.", fx:{kit:1, kiv:1},
+     cons:"Nem a legfényesebb út, hanem az, amelyik illik rá. Öt év múlva nem azt kérdezi majd, „minek csináltam” — hanem azt, „hogyan tovább”. Ez a jó kérdés."},
+    {label:"Egy év céllal: munka, nyelv, világ — tervvel, nem sodródva.", fx:{kit:1, koz:1},
+     cons:"A rokonok forgatják a szemüket. Aztán a gyereked egy év múlva két nyelvvel, munkatapasztalattal és iránnyal jön haza. A „kihagyott év” csak annak veszik el, aki elsodródik benne."}
+  ]
+};
+
+/* SON — az első önálló évek (20 évesen) */
+const SON = {
+  title:"Az első önálló évek",
+  text:"{gy} 20 éves — egyetem, munka, albérlet-tervek. Már nem nevelsz: támogatsz. És itt a kérdés, amit minden szülő magának tesz fel: mennyit adjak, és mennyit hagyjak neki?",
+  choices:[
+    {label:"Mindent fizetek — csak arra figyeljen, ami előtte van.", fx:{kit:-1},
+     cons:"Jó szándék, és sokat segít. Csak közben a felelősség is tantárgy — és azt nem lehet helyette megírni. A kényelem most is csapda, csak már drágább."},
+    {label:"Az alap jön tőlünk, a többiért megdolgozik — és nyíltan megbeszéljük, mi mire elég.", fx:{kit:1, onb:1},
+     cons:"Az első saját pénz többet tanít bármelyik szemeszternél. És láthatóan büszkébb rá, mint bármelyik jegyére volt."},
+    {label:"Felnőtt — rá bízom teljesen, oldja meg.", fx:{onb:1, koz:-1},
+     cons:"Az önállóság fontos. De az „oldd meg egyedül” és a „számíthatsz ránk” nem ellentétek — a háló nem gyengíti a kötéltáncost."}
+  ]
+};
+
+/* S6 — a visszatekintés (a gyerek {kor} éves) */
+const S6 = {
+  title:"„Jó úton vagyok?”",
+  text:"{gy} már {kor} éves. Aki egyetemre ment az évfolyamából, az most diplomázik — aki dolgozni kezdett, annak már évek tapasztalata van. Egy este leül veled: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.",
+  choices:[
+    {label:"Végigvesszük együtt, mi mindenen ment már át — a bizonyíték ő maga.", fx:{onb:2},
+     cons:"Ahogy sorolod — az első fellépés, az első kudarc, az első újrakezdés —, látod, ahogy kihúzza magát. Aki tudja, honnan jött, nem fél attól, hova tart."},
+    {label:"Elmondom: a bizonytalanság nem hiba — minden fontos dolog így kezdődik.", fx:{kit:1, kiv:1},
+     cons:"„Én is így kezdtem mindent, ami ma számít” — mondod. A világ tíz év múlva megint más lesz. A legjobb útravaló, hogy az ismeretlentől nem félni kell — kérdezni tőle."},
+    {label:"Nem mondok semmit. Meghallgatom — végig.", fx:{koz:2},
+     cons:"Nem oldasz meg semmit, csak ott vagy. Másnap felhív: „rájöttem, mit akarok.” A válasz mindig benne volt — tőled azt kapta, hogy volt kinek kimondania."}
+  ]
+};
+
+/* ============ ARCHETÍPUSOK ============ */
+const ARCH = {
+  "kit|onb":{e:"💎", n:"A Megvalósító", d:"Abból él, amit be is fejez. Nem a legtehetségesebb a szobában — hanem az, aki a tehetségét eredménnyé váltja. Te adtad hozzá a hitet ÉS a terhelést: a kettő együtt verhetetlen."},
+  "kit|kiv":{e:"🔬", n:"A Mélybúvár", d:"Amihez hozzáér, a végére jár. A felszínes korban ő az, aki tényleg ért valamihez — mélyen. Te tanítottad meg, hogy a kíváncsiságot türelemmel párosítsa."},
+  "kit|koz":{e:"🏛️", n:"Az Építő", d:"Csapatokat és dolgokat épít, amikre számítani lehet. Nála a „megígértem” szentírás. Te adtad neki a ritka párost: kitartást és felelősséget másokért."},
+  "kiv|onb":{e:"🚀", n:"Az Úttörő", d:"Oda is bemegy, ahol még nincs térkép. Mer újat próbálni, mert elhiszi, hogy menni fog — és általában megy is. Te hitetted el vele, hogy a világ felfedezhető."},
+  "koz|onb":{e:"⭐", n:"A Vezéregyéniség", d:"Emberek mennek utána, mert mellette ők is bátrabbak. Nem hangos — biztos. Te adtad neki azt az önbizalmat, amiből másoknak is jut."},
+  "kiv|koz":{e:"🌍", n:"A Hídverő", d:"Embereket, témákat, világokat köt össze. Ott ver hidat, ahol mások falat húznak. Te tanítottad meg, hogy kíváncsinak lenni együtt a legjobb."}
+};
+
+const TIPS = {
+  kit:"A kitartás nem a nehézségtől nő, hanem a LEGYŐZÖTT nehézségtől. Adj olyan feladatot, ami épp csak egy kicsit nehéz — és légy ott, amikor sikerül. A győzelem élménye a hajtóanyag.",
+  onb:"Az önbizalom nem dicséretből épül, hanem valódi teljesítményből. Keresd meg, miben jó — és hagyd, hogy ott kimagasló lehessen. A többi terület ebből merít majd erőt.",
+  kiv:"A kíváncsiság a legdrágább, amit egy gyerek elveszíthet. Ne a jó választ jutalmazd, hanem a jó KÉRDÉST. Egy „nem tudom, találjuk ki együtt” többet ér száz kész válasznál.",
+  koz:"A tehetség közösségben csiszolódik. Ha a gyereked „túl sok” vagy „túl halk” egy helynek, nem kevesebb ember kell neki — hanem jobb kör: ahol a téma közös, a kapcsolódás magától jön."
+};
+
+/* ============ MOTOR ============ */
+let S = null;
+const $ = id => document.getElementById(id);
+const gyName = () => (S && S.name) ? S.name : "a gyereked";
+const fill = (t, kor) => {
+  const s = (t || "").replace(/\{gy\}/g, gyName()).replace(/\{kor\}/g, kor ?? "")
+    .replace(/\{akt\}/g, S && S.strength ? STRENGTHS[S.strength].akt.charAt(0).toUpperCase() + STRENGTHS[S.strength].akt.slice(1) : "A heti szakkör");
+  return s.charAt(0).toUpperCase() + s.slice(1);   // névtelen játéknál a mondat eleji „a gyereked” nagybetűs legyen
+};
+
+function newGame(){
+  S = { name:"", age:null, strength:null, challenge:null,
+        stats:{kit:3,onb:3,kiv:3,koz:3}, log:[], seq:[], i:0 };
+  setYear("2026", 0);
+  $("statsrow").style.display = "none";
+  renderIntro();
+}
+
+function setYear(label, pct){
+  $("yearbig").textContent = label;
+  $("tlfill").style.width = pct + "%";
+}
+
+function renderStats(bumped){
+  const row = $("statsrow");
+  row.style.display = "grid";
+  row.innerHTML = Object.keys(STATS).map(k =>
+    `<div class="stat s-${k} ${bumped && bumped.includes(k) ? "bump":""}">
+      <div class="se">${STATS[k].e}</div>
+      <div class="sn">${STATS[k].n}</div>
+      <div class="sbar"><i style="width:${S.stats[k]*10}%"></i></div>
+    </div>`).join("");
+}
+
+function applyFx(fx){
+  const bumped = [];
+  for(const k in fx){
+    S.stats[k] = Math.max(0, Math.min(10, S.stats[k] + fx[k]));
+    bumped.push(k);
+  }
+  renderStats(bumped);
+  return bumped;
+}
+
+function chipsHtml(fx){
+  return Object.keys(fx).map(k =>
+    `<span class="chip ${fx[k]<0?"neg":""}">${fx[k]>0?"+":""}${fx[k]} ${STATS[k].e} ${STATS[k].n}</span>`).join("");
+}
+
+/* ---- intro: név + kor ---- */
+function renderIntro(){
+  const urlAge = new URLSearchParams(location.search).get("kor");
+  $("screen").innerHTML = `
+    <div class="hero">
+      <div class="big">🧭</div>
+      <h1>Éld le a gyereked<br><span>következő 10 évét.</span></h1>
+      <p class="sub">Tíz év, ami eldönti, milyen felnőtt lesz belőle — és rengeteg apró döntés, ami rád vár. Nincs tökéletes szülő, és nincs egyetlen helyes út. De van, amit ma másképp kezdhetsz.<br><br>Nézzük, <b>te</b> merre viszed.</p>
+      <input class="namefield" id="pname" maxlength="20" placeholder="A gyereked beceneve (nem kötelező)">
+      <input class="namefield" id="page" type="number" min="1" max="25" placeholder="Hány éves?" value="${urlAge?urlAge:""}">
+      <p class="hint">A becenevet nem tároljuk — csak a te képernyődön jelenik meg.</p>
+      <button class="next" onclick="startGame()">Kezdjük! →</button>
+    </div>`;
+}
+
+function startGame(){
+  S.name = ($("pname").value || "").trim();
+  const a = parseInt($("page").value, 10);
+  if(!a || a < 1 || a > 25){ $("page").focus(); $("page").style.borderColor = "var(--c3)"; return; }
+  if(a < 6) return renderTooYoung(a, "A legkisebbeknek külön verzió készül — tele játékkal, mesével, korai erősség-jelekkel.");
+  if(a < 11) return renderTooYoung(a, "A 6–10 éveseknek saját verzió készül — az alapozó évekről, ahol most vagytok.");
+  if(a > 14) return renderTooYoung(a, "A nagyoknak (15+) saját verzió készül — az egyetem–szakma–külföld nagy kérdéseiről.");
+  S.age = a;
+  renderStrength();
+}
+
+function renderTooYoung(a, msg){
+  S.age = a;
+  $("screen").innerHTML = `
+    <div class="card">
+      <h2>Hamarosan nálatok is! 🌱</h2>
+      <p class="story">${msg}</p>
+      <p class="hint">Hagyd itt az emailed, és elsőként szólunk, amint kész — addig pedig kipróbálhatod a mostani verziót úgy, mintha ${gyName()} már ${a<11?11:14} éves lenne.</p>
+      <input class="fin" id="waitmail" type="email" placeholder="Email — értesítést kérek">
+      <button class="next" onclick="waitlist()">Értesítsetek! ✉️</button>
+      <button class="ghost" onclick="S.age=${a<11?11:14}; renderStrength()">Kipróbálom így is →</button>
+    </div>`;
+}
+
+function waitlist(){
+  const em = ($("waitmail").value || "").trim();
+  if(!em){ $("waitmail").focus(); return; }
+  deliver({tipus:"várólista", email:em, gyerek_kor:S.age});
+  $("screen").innerHTML = `
+    <div class="card"><h2>Köszönjük! 💛</h2>
+    <p class="story">Szólunk, amint a korosztályotok verziója elkészül. Addig is: gyere el egy ingyenes szülői estünkre!</p>
+    <button class="next" onclick="window.open(CONFIG.ctaUrl,'_blank')">Megnézem az eseményeket →</button>
+    <button class="ghost" onclick="S.age=${S.age<11?11:14}; renderStrength()">Kipróbálom a játékot így is →</button></div>`;
+}
+
+/* ---- intake 1: erősség ---- */
+function renderStrength(){
+  renderStats();
+  setYear("2026 · " + S.age + " éves", 0);
+  $("screen").innerHTML = `
+    <div class="card">
+      <span class="yearchip">1/2</span>
+      <h2>Miben ragyog ${S.name || "a gyereked"}?</h2>
+      <div class="choices">
+        ${Object.keys(STRENGTHS).map(k => `
+          <button class="choice pathbtn" onclick="pickStrength('${k}')">
+            <span class="pe">${STRENGTHS[k].e}</span>
+            <span class="pt"><b>${STRENGTHS[k].n}</b><span>${STRENGTHS[k].tag}</span></span>
+          </button>`).join("")}
+      </div>
+    </div>`;
+}
+
+function pickStrength(k){
+  S.strength = k;
+  S.stats[STRENGTHS[k].boost] += 1;   // az erősség kezdőtőkét ad — a "csupa barát" gyerek magasabb Közösséggel indul
+  S.log.push({y:"2026", text:STRENGTHS[k].e + " Ragyog: " + STRENGTHS[k].n.toLowerCase()});
+  renderChallenge();
+}
+
+/* ---- intake 2: kihívás ---- */
+function renderChallenge(){
+  $("screen").innerHTML = `
+    <div class="card">
+      <span class="yearchip">2/2</span>
+      <h2>És hol nehéz neki?</h2>
+      <p class="hint">A legtöbb gyerek több ezekből — most azt válaszd, ami MA a legjellemzőbb rá.</p>
+      <div class="choices">
+        ${Object.keys(CHALLENGES).map(k => `
+          <button class="choice pathbtn" onclick="pickChallenge('${k}')">
+            <span class="pe">${CHALLENGES[k].e}</span>
+            <span class="pt"><b>${CHALLENGES[k].n}</b><span>${CHALLENGES[k].tag}</span></span>
+          </button>`).join("")}
+      </div>
+    </div>`;
+}
+
+function pickChallenge(k){
+  S.challenge = k;
+  S.stats[CHALLENGES[k].seed] = Math.min(S.stats[CHALLENGES[k].seed], 2);
+  S.log.push({y:"2026", text:CHALLENGES[k].e + " Nehéz: " + CHALLENGES[k].n.toLowerCase()});
+  buildSeq();
+  S.i = 0;
+  renderEvent();
+}
+
+/* ---- MESTER-IDŐVONAL: minden jelenet életkorhoz horgonyozva ----
+   A játékos a belépési kortól számított 10 éves ablakát játssza le.
+   Aki 11 évesen lép be, annál a felvételi a 2-3. kérdés; aki 13-nál, ott az első;
+   aki 14-nél, az már átugrotta — nála a beilleszkedés indít, és több jut a fiatal
+   felnőtt évekből. A kérdések száma ezért 6 és 8 között változhat — ez szándékos. */
+const TIMELINE = () => [
+  {ev: S1[S.strength], age: 12},                    // az erősség első szikrája
+  {ev: S2, age: 13},                                // a felvételi éve
+  {ev: SBE, age: 14},                               // beilleszkedés a középiskolába
+  {ev: {...S3[S.challenge], bridge:true}, age: 16}, // a kihívás éve
+  {ev: S4, age: 17},                                // a „majd holnap” estéje
+  {ev: S5, age: 18},                                // a rajtvonal
+  {ev: SON, age: 20}                                // az első önálló évek
+];
+
+function buildSeq(){
+  const A = S.age;
+  const seq = TIMELINE()
+    .filter(b => b.age >= A && b.age <= A + 8)      // ami az ablakba esik
+    .map(b => ({...b.ev, y: b.age - A}));
+  seq.push({...S6, y: 9});                          // a visszatekintés mindig zár (2035)
+  seq.sort((a,b) => a.y - b.y);
+  S.seq = seq;
+}
+
+function renderEvent(){
+  const ev = S.seq[S.i];
+  const year = 2026 + ev.y, kor = S.age + ev.y;
+  setYear(year + " · " + kor + " éves", ev.y * 10);
+  let flavor = "";
+  if(ev.flavor) flavor = `<p class="flavor">${fill(ev.flavor[S.strength], kor)}</p>`;
+  else if(ev.bridge && S.school) flavor = `<p class="flavor">${BRIDGES[S.school]}</p>`;
+  $("screen").innerHTML = `
+    <div class="card">
+      <span class="yearchip">${year} · ${gyName()} ${kor} éves</span>
+      <h2>${fill(ev.title, kor)}</h2>
+      <p class="story">${fill(ev.text, kor)}</p>
+      ${flavor}
+      <div class="choices">
+        ${ev.choices.map((c, idx) => {
+          const locked = c.gate && S.stats[c.gate.stat] < c.gate.min;
+          return `<button class="choice ${locked?"locked":""}" onclick="pickChoice(${idx})">
+              ${locked?"🔒 ":""}${fill(c.label, kor)}
+              ${c.gate ? `<span class="locknote" id="ln${idx}">${fill(c.gate.note, kor)}</span>` : ""}
+            </button>`;
+        }).join("")}
+      </div>
+    </div>`;
+}
+
+function pickChoice(idx){
+  const ev = S.seq[S.i];
+  const c = ev.choices[idx];
+  if(c.gate && S.stats[c.gate.stat] < c.gate.min){
+    const btns = document.querySelectorAll(".choice");
+    btns[idx].classList.remove("shake"); void btns[idx].offsetWidth;
+    btns[idx].classList.add("shake");
+    $("ln"+idx).classList.add("show");
+    return;
+  }
+  applyFx(c.fx);
+  if(c.school) S.school = c.school;
+  const kor = S.age + ev.y;
+  S.log.push({y:(2026 + ev.y) + " (" + kor + " év)", text:fill(c.label, kor)});
+  $("screen").innerHTML = `
+    <div class="card">
+      <span class="yearchip">${2026 + ev.y}</span>
+      <p class="cons">${fill(c.cons, kor)}</p>
+      <div class="chips">${chipsHtml(c.fx)}</div>
+      <button class="next" onclick="nextEvent()">${S.i < S.seq.length-1 ? "⏳ Telnek az évek…" : "🎬 Ugorjunk előre →"}</button>
+    </div>`;
+}
+
+function nextEvent(){
+  S.i++;
+  if(S.i < S.seq.length) renderEvent();
+  else renderProfile();
+}
+
+function archetype(){
+  const order = Object.keys(S.stats).sort((a,b) => S.stats[b]-S.stats[a] || a.localeCompare(b));
+  const key = [order[0], order[1]].sort().join("|");
+  return {arch: ARCH[key], low: order[3]};
+}
+
+function renderProfile(){
+  const endAge = S.age + 10;
+  setYear("2036 · " + endAge + " éves", 100);
+  const {arch, low} = archetype();
+  const sum = Object.values(S.stats).reduce((a,b)=>a+b,0);
+  const pct = Math.max(40, Math.min(98, Math.round((sum-12)/12*100)));
+  S.result = {arch:arch.n, pct};
+  const who = S.name || "A gyereked";
+  const barsHtml = Object.keys(STATS).map(k =>
+    `<div class="pbar"><span>${STATS[k].e} ${STATS[k].n}</span>
+      <span class="pb"><i data-w="${S.stats[k]*10}" style="background:${{kit:"var(--c1)",koz:"var(--c3)",kiv:"var(--c2)",onb:"var(--gold)"}[k]}"></i></span>
+      <span class="pv">${S.stats[k]}</span></div>`).join("");
+  const recap = S.log.map(l => `<b>${l.y}</b> — ${l.text}`).join("<br>");
+  $("screen").innerHTML = `
+    <div class="card profile">
+      <span class="yearchip">2036 — ${who} ${endAge} éves</span>
+      <div class="arch-emoji">${arch.e}</div>
+      <div class="arch-name">${arch.n}</div>
+      <p class="arch-desc"><b>${who}</b> — ${arch.d}</p>
+      <div class="score">Jövőállóság<br><span class="scorenum">${pct}%</span></div>
+      <div class="pbars">${barsHtml}</div>
+      <div class="tipbox"><b>Amin ma elkezdhetsz dolgozni:</b> ${TIPS[low]}</div>
+      <div class="recap"><b>A ti 10 évetek:</b><br>${recap}</div>
+      <p class="disclaim">Ez játék, nem diagnózis — a gyereked ezerszer összetettebb, mint négy sáv. Akivé „vált”, azt a te döntéseid formálták itt is, ahogy az életben is.</p>
+      <button class="ghost" onclick="shareResult(this)" data-arch="${arch.n}" data-pct="${pct}">📤 Megosztom az eredményt (név nélkül)</button>
+      <button class="ghost" onclick="newGame()">🔁 Újrajátszom</button>
+    </div>
+    <div class="card formcard" id="betacard">
+      <h2>🔬 Béta-teszt: segíts egy mondattal</h2>
+      <p class="hint">Ez az app most tanul — a visszajelzéseddel rengeteg szülőnek segítesz:</p>
+      <textarea class="fin" id="fmsg" placeholder="Egy mondat: Tetszett? Min gondolkodtatott el?"></textarea>
+      <label class="chk"><input type="checkbox" id="c2"> A mondatom névtelenül megosztható, hogy másokat is elgondolkodtasson.</label>
+      <p class="hint" style="margin-top:18px">Ha kéred, emailben elküldjük a részletes profilt, a kihívásotokhoz illő mini-útmutatót és a meghívót az <b>ingyenes szülői estre</b>, ahol mindezt élőben bogozzuk ki:</p>
+      <input class="fin" id="femail" type="email" placeholder="Email">
+      <label class="chk"><input type="checkbox" id="c1" checked> Kíváncsi vagyok az összesített válaszokra is — küldjétek!</label>
+      <input class="fin" id="fcity" placeholder="Város, ország (név nem kell)">
+      <label class="chk"><input type="checkbox" id="c3" checked> Érdekel az ingyenes szülői est, írjatok, mikor lesz a környékemen.</label>
+      <button class="next" onclick="sendForm()">Elküldöm + kérem a profilt ✉️</button>
+      <p class="gdpr">A gyerek becenevét nem tároljuk és nem küldjük el — csak az emailed és amit ide beírsz. Az adataidat kizárólag a fenti célokra használjuk, bármikor leiratkozhatsz.</p>
+    </div>`;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll(".pb i").forEach(i => i.style.width = i.dataset.w + "%");
+  }));
+  confetti();
+}
+
+/* ---- form beküldés ---- */
+function deliver(payload){
+  const data = {...payload,
+    korsav:"11-14", gyerek_kor:S.age,
+    erosseg:S.strength ? STRENGTHS[S.strength].n : "", kihivas:S.challenge ? CHALLENGES[S.challenge].n : "",
+    archetipus:S.result ? S.result.arch : "", jovoallosag:S.result ? S.result.pct + "%" : ""};
+  if(CONFIG.formEndpoint){
+    fetch(CONFIG.formEndpoint, {method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(data)}).catch(()=>{});
+  } else {
+    const body = Object.entries(data).map(([k,v]) => k + ": " + v).join("\n");
+    location.href = "mailto:" + CONFIG.fallbackEmail +
+      "?subject=" + encodeURIComponent("Szülőpróba — béta visszajelzés") +
+      "&body=" + encodeURIComponent(body);
+  }
+}
+
+function sendForm(){
+  const em = ($("femail").value || "").trim();
+  const msg = ($("fmsg").value || "").trim();
+  if(!em && !msg){ $("fmsg").focus(); $("fmsg").style.borderColor = "var(--c3)"; return; }
+  deliver({tipus:"béta", email:em, uzenet:msg, varos:($("fcity").value||"").trim(),
+    osszesitest_ker:$("c1").checked ? "igen":"nem", megoszthato:$("c2").checked ? "igen":"nem",
+    est_erdekli:$("c3").checked ? "igen":"nem"});
+  $("betacard").innerHTML = `
+    <h2>Köszönjük! 💛</h2>
+    <p class="story">${em ? "Hamarosan megérkezik a profil és a meghívó. Segítettél" : "A visszajelzésed sokat ér — segítettél"} — és most egy kérdés:</p>
+    <p class="story"><b>Ismersz még egy szülőt, akinek jólesne 10 perc önmagára?</b></p>
+    <button class="next" onclick="shareResult(this)" data-arch="${S.result.arch}" data-pct="${S.result.pct}">📤 Küldöm neki a játékot</button>
+    <button class="ghost" onclick="window.open(CONFIG.ctaUrl,'_blank')">📅 Megnézem a szülői esteket</button>`;
+}
+
+/* ---- megosztható eredmény-kép (gyereknév és tipp NÉLKÜL: archetípus + csíkok + %) ---- */
+function rr(x, px, py, w, h, r){
+  x.beginPath(); x.moveTo(px+r, py);
+  x.arcTo(px+w, py, px+w, py+h, r); x.arcTo(px+w, py+h, px, py+h, r);
+  x.arcTo(px, py+h, px, py, r); x.arcTo(px, py, px+w, py, r); x.closePath();
+}
+
+function buildShareImage(archName, pct){
+  const arch = Object.values(ARCH).find(a => a.n === archName) || archetype().arch;
+  const W = 1080, H = 1350, FONT = "-apple-system, 'Segoe UI', Roboto, Arial, sans-serif";
+  const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+  const x = cv.getContext("2d");
+  x.fillStyle = "#0b0f1a"; x.fillRect(0, 0, W, H);
+  let g = x.createRadialGradient(880, 40, 0, 880, 40, 720);
+  g.addColorStop(0, "rgba(167,139,250,.22)"); g.addColorStop(1, "rgba(167,139,250,0)");
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  g = x.createRadialGradient(100, 1330, 0, 100, 1330, 680);
+  g.addColorStop(0, "rgba(34,211,238,.16)"); g.addColorStop(1, "rgba(34,211,238,0)");
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.textAlign = "center";
+  x.font = "700 46px " + FONT; x.fillStyle = "#93a0c4";
+  x.fillText("🧭 SZÜLŐPRÓBA", W/2, 110);
+  x.font = "190px " + FONT; x.fillText(arch.e, W/2, 380);
+  const tg = x.createLinearGradient(180, 0, 900, 0);
+  tg.addColorStop(0, "#22d3ee"); tg.addColorStop(.5, "#a78bfa"); tg.addColorStop(1, "#f472b6");
+  x.font = "800 96px " + FONT; x.fillStyle = tg; x.fillText(arch.n, W/2, 530);
+  x.font = "600 40px " + FONT; x.fillStyle = "#93a0c4"; x.fillText("Jövőállóság", W/2, 630);
+  x.font = "800 150px " + FONT; x.fillStyle = "#fbbf24"; x.fillText(pct + "%", W/2, 775);
+  const colors = {kit:"#22d3ee", onb:"#fbbf24", kiv:"#a78bfa", koz:"#f472b6"};
+  let y = 890;
+  for(const k of ["kit","onb","kiv","koz"]){
+    x.textAlign = "left"; x.font = "600 42px " + FONT; x.fillStyle = "#eef2ff";
+    x.fillText(STATS[k].e + " " + STATS[k].n, 90, y + 14);
+    x.fillStyle = "#26304e"; rr(x, 470, y - 16, 430, 28, 14); x.fill();
+    x.fillStyle = colors[k]; rr(x, 470, y - 16, Math.max(28, 430 * S.stats[k] / 10), 28, 14); x.fill();
+    x.textAlign = "right"; x.font = "700 42px " + FONT; x.fillStyle = "#93a0c4";
+    x.fillText(String(S.stats[k]), 990, y + 14);
+    y += 92;
+  }
+  x.textAlign = "center"; x.font = "600 38px " + FONT; x.fillStyle = "#93a0c4";
+  x.fillText("Éld le a gyereked következő 10 évét — 10 percben", W/2, 1270);
+  x.fillStyle = "#22d3ee"; x.font = "700 40px " + FONT; x.fillText("futuretour.app", W/2, 1325);
+  return new Promise(res => cv.toBlob(res, "image/png"));
+}
+
+async function shareResult(btn){
+  const text = `🧭 Szülőpróba: lejátszottam a gyerekem következő 10 évét — 2036-ra „${btn.dataset.arch}” lett (Jövőállóság: ${btn.dataset.pct}%). Játszd le te is a tiédét: ${location.origin + location.pathname}`;
+  try{
+    const blob = await buildShareImage(btn.dataset.arch, btn.dataset.pct);
+    const file = new File([blob], "szuloproba-eredmeny.png", {type:"image/png"});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], text});
+      return;
+    }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "szuloproba-eredmeny.png"; a.click();
+    if(navigator.clipboard) navigator.clipboard.writeText(text).catch(()=>{});
+    alert("A kép letöltődött, a szöveg a vágólapon — mehet a posztba! 📸");
+  }catch(e){
+    if(e && e.name === "AbortError") return;   // a felhasználó bezárta a megosztót
+    if(navigator.share){ navigator.share({text}).catch(()=>{}); }
+    else { navigator.clipboard.writeText(text).then(()=>alert("Kimásolva — beillesztheted bárhová! 📋")); }
+  }
+}
+
+function confetti(){
+  const colors = ["#22d3ee","#a78bfa","#f472b6","#fbbf24","#34d399"];
+  for(let i=0;i<44;i++){
+    const d = document.createElement("div");
+    d.className = "cf";
+    d.style.left = Math.random()*100 + "vw";
+    d.style.background = colors[i % colors.length];
+    d.style.animationDuration = (2.2 + Math.random()*2.2) + "s";
+    d.style.animationDelay = (Math.random()*0.9) + "s";
+    d.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 6000);
+  }
+}
+
+newGame();
+</script>
+</body>
+</html>
