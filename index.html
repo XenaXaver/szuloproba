@@ -226,7 +226,7 @@ const K10 = {
      cons:"A szándék szeretet, az üzenet mégis ez: „a kudarc olyan szörnyű, hogy kerülni kell.” Pedig a kudarc nem ellenfél, tananyag. Kísérő kell mellé, nem testőr."},
     {label:"Otthon átbeszéljük: mi ment jól, mi nem, és ő mit csinálna másképp.", fx:{onb:1, kit:1},
      cons:"Másnapra a „kiestem”-ből „tudom, min múlt” lesz. Ebből a mondatból lesz felnőttkorban az: „nem jött össze, mit tanultam belőle?”"},
-    {label:"Nevezzünk újra, és ő döntse el, mikor áll ki megint.", fx:{onb:2}, gate:{stat:"onb", min:5,
+    {label:"Nevezzünk újra, és ő döntse el, mikor áll ki megint.", fx:{onb:2}, gate:{stat:"onb", min:4,
       note:"🔒 Ehhez az kellett volna, hogy az előző években több „képes vagyok rá” élmény gyűljön össze, az önbizalom nem a versenyen terem, hanem jóval előtte."},
      cons:"Két hónap múlva magától mondja: „nevezz be újra.” A visszatérés a legerősebb győzelem, és ez már az övé."}
   ]
@@ -654,6 +654,13 @@ function buildSeq(){
   S.seq = seq;
 }
 
+/* A lakat csak akkor él, ha volt már legalább 3 korábbi döntés, vagyis volt esély
+   "megdolgozni" érte. Aki 17-18 évessel lép be és rögtön nagy döntést kap,
+   annál minden opció nyitva van. */
+function gateLocked(c){
+  return !!(c.gate && S.i >= 3 && S.stats[c.gate.stat] < c.gate.min);
+}
+
 function renderEvent(){
   const ev = S.seq[S.i];
   const year = 2026 + ev.y, kor = S.age + ev.y;
@@ -669,7 +676,7 @@ function renderEvent(){
       ${flavor}
       <div class="choices">
         ${ev.choices.map((c, idx) => {
-          const locked = c.gate && S.stats[c.gate.stat] < c.gate.min;
+          const locked = gateLocked(c);
           return `<button class="choice ${locked?"locked":""}" onclick="pickChoice(${idx})">
               ${locked?"🔒 ":""}${fill(c.label, kor)}
               ${c.gate ? `<span class="locknote" id="ln${idx}">${fill(c.gate.note, kor)}</span>` : ""}
@@ -682,7 +689,7 @@ function renderEvent(){
 function pickChoice(idx){
   const ev = S.seq[S.i];
   const c = ev.choices[idx];
-  if(c.gate && S.stats[c.gate.stat] < c.gate.min){
+  if(gateLocked(c)){
     const btns = document.querySelectorAll(".choice");
     btns[idx].classList.remove("shake"); void btns[idx].offsetWidth;
     btns[idx].classList.add("shake");
