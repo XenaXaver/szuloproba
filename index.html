@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Szülőpróba — Future Tour</title>
-<meta name="description" content="Éld le a gyereked következő 10 évét — 10 percben. Milyen felnőtt lesz belőle? Játszd végig a Szülőpróbát.">
+<title>Szülőpróba · Future Tour</title>
+<meta name="description" content="Éld le a gyereked következő 10 évét 10 percben. Milyen felnőtt lesz belőle? Játszd végig a Szülőpróbát.">
 <style>
   :root{
     --bg:#0b0f1a; --card:#141a2b; --card2:#1a2138; --line:#26304e;
@@ -143,11 +143,11 @@
   </header>
   <div class="stats" id="statsrow" style="display:none"></div>
   <main id="screen"></main>
-  <footer>Future Tour — hallgasd meg élőben is · <a href="https://futuretour.app" target="_blank" rel="noopener">futuretour.app</a></footer>
+  <footer>Future Tour, hallgasd meg élőben is · <a href="https://futuretour.app" target="_blank" rel="noopener">futuretour.app</a></footer>
 </div>
 
 <script>
-/* ============ KONFIG — szabadon átírható ============ */
+/* ============ KONFIG, szabadon átírható ============ */
 const CONFIG = {
   ctaUrl: "https://futuretour.app",
   formEndpoint: "",                     // ← IDE jön majd a Brevo/webhook URL; amíg üres, emailben megy
@@ -162,16 +162,16 @@ const STATS = {
   koz:{e:"🤝", n:"Közösség"}
 };
 
-/* ============ INTAKE — 2 kör ============ */
+/* ============ INTAKE, 2 kör ============ */
 const STRENGTHS = {
-  kez:{e:"🔧", n:"A keze és a szeme", tag:"Épít, szerel, rajzol — kézzel gondolkodik.", boost:"kiv", akt:"a heti műhelyszakkör"},
-  kif:{e:"🎭", n:"A kifejezés", tag:"Színpad, szó, zene — ha figyelnek rá, kivirul.", boost:"onb", akt:"a heti próba"},
-  fej:{e:"⚡", n:"A feje", tag:"Gyorsan kapcsol, mindent átlát — néha túl gyorsan is.", boost:"kiv", akt:"a heti edzés"},
+  kez:{e:"🔧", n:"A keze és a szeme", tag:"Épít, szerel, rajzol, kézzel gondolkodik.", boost:"kiv", akt:"a heti műhelyszakkör"},
+  kif:{e:"🎭", n:"A kifejezés", tag:"Színpad, szó, zene, ha figyelnek rá, kivirul.", boost:"onb", akt:"a heti próba"},
+  fej:{e:"⚡", n:"A feje", tag:"Gyorsan kapcsol, mindent átlát, néha túl gyorsan is.", boost:"kiv", akt:"a heti edzés"},
   emb:{e:"🤝", n:"Az emberek", tag:"Érzi a többieket: összehoz, békít, visz.", boost:"koz", akt:"a heti edzés"}
 };
 const CHALLENGES = {
   porgo:{e:"🌪️", n:"Nem bír megülni", tag:"Tele energiával, elkalandozik, pörög.", seed:"kit"},
-  unja:{e:"😴", n:"Hamar felad — vagy unja", tag:"Ha nem megy elsőre, otthagyja. Vagy minden túl könnyű neki.", seed:"kit"},
+  unja:{e:"😴", n:"Hamar felad, vagy unja", tag:"Ha nem megy elsőre, otthagyja. Vagy minden túl könnyű neki.", seed:"kit"},
   szorong:{e:"😰", n:"Magához szigorú", tag:"A hibáin méri magát, szorong a megfelelésen.", seed:"onb"},
   vissza:{e:"🐢", n:"Visszahúzódik", tag:"Nehezen nyílik, kevés az igazi barát.", seed:"koz"}
 };
@@ -181,291 +181,291 @@ const CHALLENGES = {
 /* ===== 5–10 ÉV: az alapozó évek ===== */
 const K6 = {
   title:"Az iskolaválasztás",
-  text:"Itt az ovi utolsó éve, és mindenki ezt kérdezi: „Hova írattátok?” A körzetes, a „jó hírű”, a sok-délutános — mind mást ígér. Amit kevesen mondanak ki: elsőben nem iskolát választasz, hanem embert — egy tanítót, aki mellett a gyereked vagy megszereti a tanulást, vagy nem.",
+  text:"Itt az ovi utolsó éve, és mindenki ezt kérdezi: „Hova írattátok?” A körzetes, a „jó hírű”, a sok-délutános, mind mást ígér. Amit kevesen mondanak ki: elsőben nem iskolát választasz, hanem embert, egy tanítót, aki mellett a gyereked vagy megszereti a tanulást, vagy nem.",
   choices:[
-    {label:"A leghíresebb suli a városban — kezdődjön korán a verseny.", fx:{kit:1, onb:-1},
+    {label:"A leghíresebb suli a városban, kezdődjön korán a verseny.", fx:{kit:1, onb:-1},
      cons:"Erős alap, korai hajtás. Csak figyeld a jeleket: hatévesen még nem versenyezni kell megtanulni, hanem megszeretni azt, ami az iskolában történik."},
     {label:"Megnézem a tanítókat: oda megyünk, ahol olyan ember várja, aki mellett kivirul.", fx:{onb:1, kiv:1},
-     cons:"Az első tanító kezében van valami, amit tanterv nem pótol: az, hogy a gyereked hogyan gondol majd magára tanulóként — akár évtizedekig."},
-    {label:"A körzetes — közel van, és oda megy mindenki az oviból.", fx:{koz:1, kiv:-1},
-     cons:"A barátok sokat érnek, és lehet, hogy ez a jó döntés. Csak az ne döntsön helyetted, hogy ez a legkényelmesebb — a „mindegy, hova jár” üzenete hatévesen is átjön."}
+     cons:"Az első tanító kezében van valami, amit tanterv nem pótol: az, hogy a gyereked hogyan gondol majd magára tanulóként, akár évtizedekig."},
+    {label:"A körzetes, közel van, és oda megy mindenki az oviból.", fx:{koz:1, kiv:-1},
+     cons:"A barátok sokat érnek, és lehet, hogy ez a jó döntés. Csak az ne döntsön helyetted, hogy ez a legkényelmesebb, a „mindegy, hova jár” üzenete hatévesen is átjön."}
   ]
 };
 
 const K7 = {
   title:"A képernyő",
-  text:"Hazaérsz: {gy} a tablet fölött görnyed — ma már sokadszor. Ismerős jelenet minden családban. A kérdés nem az, hogy legyen-e képernyő. Hanem hogy ki neveli a gyerekedet: te — vagy az ajánló-algoritmus?",
+  text:"Hazaérsz: {gy} a tablet fölött görnyed, ma már sokadszor. Ismerős jelenet minden családban. A kérdés nem az, hogy legyen-e képernyő. Hanem hogy ki neveli a gyerekedet: te, vagy az ajánló-algoritmus?",
   choices:[
     {label:"Tiltás. Hétköznap semmi képernyő, és kész.", fx:{kit:1, kiv:-1},
-     cons:"A keret jót tesz — de a teljes tiltás a tiltott gyümölcs édességét adja, és a haveroknál úgyis pótolja. A cél nem a nulla, hanem a kontroll — ami előbb-utóbb az övé lesz."},
-    {label:"Keretek + együtt: van ideje, és néha melléülök — mutassa meg, mit néz, mit játszik.", fx:{kiv:1, koz:1},
-     cons:"Meglepő dolog derül ki: van, amiben kifejezetten ügyes. És mostantól nem ellenőr vagy, hanem partner — kamaszkorban ez lesz az aranyat érő különbség."},
-    {label:"Hagyom — legalább addig csendben van.", fx:{kit:-1},
-     cons:"A képernyő a legolcsóbb bébiszitter — és hosszú távon a legdrágább. Nem a gyerek választotta az algoritmust: az magától jött. Egy keret még belefér."}
+     cons:"A keret jót tesz, de a teljes tiltás a tiltott gyümölcs édességét adja, és a haveroknál úgyis pótolja. A cél nem a nulla, hanem a kontroll, ami előbb-utóbb az övé lesz."},
+    {label:"Keretek + együtt: van ideje, és néha melléülök, mutassa meg, mit néz, mit játszik.", fx:{kiv:1, koz:1},
+     cons:"Meglepő dolog derül ki: van, amiben kifejezetten ügyes. És mostantól nem ellenőr vagy, hanem partner, kamaszkorban ez lesz az aranyat érő különbség."},
+    {label:"Hagyom, legalább addig csendben van.", fx:{kit:-1},
+     cons:"A képernyő a legolcsóbb bébiszitter, és hosszú távon a legdrágább. Nem a gyerek választotta az algoritmust: az magától jött. Egy keret még belefér."}
   ]
 };
 
 const K9 = {
   title:"A harmadik különóra",
-  text:"Kedd délután. Az úszás és az angol mellé jönne a harmadik különóra — közben {gy} az ablakból nézi, ahogy a szomszéd gyerekek fociznak az udvaron. Rád néz. Nem mond semmit — de mindent mond.",
+  text:"Kedd délután. Az úszás és az angol mellé jönne a harmadik különóra, közben {gy} az ablakból nézi, ahogy a szomszéd gyerekek fociznak az udvaron. Rád néz. Nem mond semmit, de mindent mond.",
   choices:[
-    {label:"Marad mind, és jön az új is — most kell mindent megalapozni.", fx:{kit:1, onb:-1},
+    {label:"Marad mind, és jön az új is, most kell mindent megalapozni.", fx:{kit:1, onb:-1},
      cons:"Sok mindenhez ért majd. Csak azt figyeld, hol a határ: ahol a fejlesztésből futószalag lesz, ott elvész az, amiért az egész indult. A jókedve a műszerfalad."},
-    {label:"Egyet választunk — azt, amiben ragyog —, a többi idő az övé.", fx:{kit:1, kiv:1},
-     cons:"Egy dolog, amiben hétről hétre mélyül, plusz szabad idő, amiben magától talál ki dolgokat — ez a párosítás nevel. Se futószalag, se üresjárat: egyensúly."},
-    {label:"Elengedünk mindent — hadd legyen gyerek, majd eldönti később.", fx:{koz:1, kit:-1},
-     cons:"A szabad játék kincs, ebben igazad van. De ha SEMMI nincs, amiben rendszeresen gyakorol és fejlődik, az erőfeszítés öröme marad ki — és azt pótolni nehezebb, mint úszni megtanulni."}
+    {label:"Egyet választunk, azt, amiben ragyog. A többi idő az övé.", fx:{kit:1, kiv:1},
+     cons:"Egy dolog, amiben hétről hétre mélyül, plusz szabad idő, amiben magától talál ki dolgokat, ez a párosítás nevel. Se futószalag, se üresjárat: egyensúly."},
+    {label:"Elengedünk mindent, hadd legyen gyerek, majd eldönti később.", fx:{koz:1, kit:-1},
+     cons:"A szabad játék kincs, ebben igazad van. De ha SEMMI nincs, amiben rendszeresen gyakorol és fejlődik, az erőfeszítés öröme marad ki, és azt pótolni nehezebb, mint úszni megtanulni."}
   ]
 };
 
 const K10 = {
   title:"Az első igazi kudarc",
-  text:"{gy} hetek óta készül a versenyre — és kiesik az első körben. A kocsiban hazafelé végig sír. Most dől el valami fontos: azt, hogy mit jelent a kudarc, tőled tanulja meg.",
+  text:"{gy} hetek óta készül a versenyre, és kiesik az első körben. A kocsiban hazafelé végig sír. Most dől el valami fontos: azt, hogy mit jelent a kudarc, tőled tanulja meg.",
   choices:[
-    {label:"Soha többet ilyen verseny — megvédem ettől az érzéstől.", fx:{kit:-1},
-     cons:"A szándék szeretet, az üzenet mégis ez: „a kudarc olyan szörnyű, hogy kerülni kell.” Pedig a kudarc nem ellenfél — tananyag. Kísérő kell mellé, nem testőr."},
-    {label:"Otthon átbeszéljük: mi ment jól, mi nem — és ő mit csinálna másképp.", fx:{onb:1, kit:1},
-     cons:"Másnapra a „kiestem”-ből „tudom, min múlt” lesz. Ebből a mondatból lesz felnőttkorban az: „nem jött össze — mit tanultam belőle?”"},
-    {label:"Nevezzünk újra — és ő döntse el, mikor áll ki megint.", fx:{onb:2}, gate:{stat:"onb", min:5,
-      note:"🔒 Ehhez az kellett volna, hogy az előző években több „képes vagyok rá” élmény gyűljön össze — az önbizalom nem a versenyen terem, hanem jóval előtte."},
-     cons:"Két hónap múlva magától mondja: „nevezz be újra.” A visszatérés a legerősebb győzelem — és ez már az övé."}
+    {label:"Soha többet ilyen verseny, megvédem ettől az érzéstől.", fx:{kit:-1},
+     cons:"A szándék szeretet, az üzenet mégis ez: „a kudarc olyan szörnyű, hogy kerülni kell.” Pedig a kudarc nem ellenfél, tananyag. Kísérő kell mellé, nem testőr."},
+    {label:"Otthon átbeszéljük: mi ment jól, mi nem, és ő mit csinálna másképp.", fx:{onb:1, kit:1},
+     cons:"Másnapra a „kiestem”-ből „tudom, min múlt” lesz. Ebből a mondatból lesz felnőttkorban az: „nem jött össze, mit tanultam belőle?”"},
+    {label:"Nevezzünk újra, és ő döntse el, mikor áll ki megint.", fx:{onb:2}, gate:{stat:"onb", min:5,
+      note:"🔒 Ehhez az kellett volna, hogy az előző években több „képes vagyok rá” élmény gyűljön össze, az önbizalom nem a versenyen terem, hanem jóval előtte."},
+     cons:"Két hónap múlva magától mondja: „nevezz be újra.” A visszatérés a legerősebb győzelem, és ez már az övé."}
   ]
 };
-/* S1 — az erősség első szikrája (erősségenként) */
+/* S1, az erősség első szikrája (erősségenként) */
 const S1 = {
   kez:{title:"A szétszedett robotporszívó",
-    text:"Hazaérsz: {gy} a nappali közepén ül, körülötte a robotporszívó — darabokban. „Meg akartam nézni, hogyan gondolkodik.” A holnapi lecke a táskában, érintetlenül.",
+    text:"Hazaérsz: {gy} a nappali közepén ül, körülötte a robotporszívó, darabokban. „Meg akartam nézni, hogyan gondolkodik.” A holnapi lecke a táskában, érintetlenül.",
     choices:[
-      {label:"Előbb a lecke — a szerelés jutalom, ha végzett.", fx:{kit:1, kiv:-1},
+      {label:"Előbb a lecke, a szerelés jutalom, ha végzett.", fx:{kit:1, kiv:-1},
        cons:"Rend lesz, és a lecke is meglesz. Csak arra figyelj, hogy a „jutalom” szóval ne fokozd le azt, ami valójában a legnagyobb ereje."},
       {label:"Leülök mellé: rakjuk össze együtt, és közben megmérjük, kiszámoljuk.", fx:{kiv:2},
        cons:"Kiderül, hogy a matek nem a füzetből megy a fejébe, hanem a kezéből. Ezt a délutánt évek múlva is emlegetni fogja."},
       {label:"Lefotózom, kiposztolom: micsoda zseni! Hadd csinálja szabadon.", fx:{onb:1, kit:-1},
-       cons:"A taps jólesik neki — de a taps önmagában elillan. A hit mellé feladat is kell: valami, amin megdolgozik. Hinni benne az első lépés, nem az egyetlen."}
+       cons:"A taps jólesik neki, de a taps önmagában elillan. A hit mellé feladat is kell: valami, amin megdolgozik. Hinni benne az első lépés, nem az egyetlen."}
     ]},
   kif:{title:"A főszerep és a bizonyítvány",
     text:"{gy} ragyogva jön haza: övé a főszerep az iskolai darabban. Ugyanaznap érkezik az ellenőrzőbe két hármas és egy megjegyzés: „az órán szerepel, nem figyel”.",
     choices:[
       {label:"Előbb a jegyek. A színpad jutalom lesz, ha javít.", fx:{kit:1, onb:-1},
-       cons:"Javít a jegyein — és megtanul valamit, amit nem akartál tanítani: hogy amiben ragyog, az csak dísz. Pedig az a fény egyszer még kenyeret is adhat."},
+       cons:"Javít a jegyein, és megtanul valamit, amit nem akartál tanítani: hogy amiben ragyog, az csak dísz. Pedig az a fény egyszer még kenyeret is adhat."},
       {label:"Ott ülök az első sorban, és a leghangosabban tapsolok.", fx:{onb:2},
-       cons:"A színpadról meglát a nézőtéren. Az a pillanat — hogy valaki büszke rá abban, amiben a legjobb — évekig fogja tartani."},
+       cons:"A színpadról meglát a nézőtéren. Az a pillanat, hogy valaki büszke rá abban, amiben a legjobb, évekig fogja tartani."},
       {label:"Taps ÉS terhelés: beíratom egy komolyabb műhelybe, ahol nem ő a legjobb.", fx:{kit:1, onb:1},
-       cons:"Először megszeppen: itt mindenki tud valamit. Aztán elkezd nőni. A tehetség tapsból él — de kihívástól fejlődik."}
+       cons:"Először megszeppen: itt mindenki tud valamit. Aztán elkezd nőni. A tehetség tapsból él, de kihívástól fejlődik."}
     ]},
   fej:{title:"Öt perc alatt kész",
     text:"A házi feladat {gy} számára öt perc. Az órákon unatkozik, mégis mindenből jó. A tanárok elégedettek. Te viszont látod: soha semmiért nem kellett még megküzdenie.",
     choices:[
-      {label:"Örülök neki — okos gyerek, legalább nem stresszel.", fx:{onb:1, kit:-1},
-       cons:"Most könnyű mindenkinek. De aki sosem küzd meg semmiért, az nem tanulja meg, milyen átlendülni a nehezén — és a nehéz egyszer mindenkinek megérkezik."},
-      {label:"Falat keresek neki: verseny, emelt szint — valami, ami NEM megy elsőre.", fx:{kit:2},
-       cons:"Az első kudarcnál majdnem feladja. Aztán ottmarad. Amit most tanul — hogy a „nem megy” után van folytatás — azt a talentum önmagában sosem adná meg."},
+      {label:"Örülök neki, okos gyerek, legalább nem stresszel.", fx:{onb:1, kit:-1},
+       cons:"Most könnyű mindenkinek. De aki sosem küzd meg semmiért, az nem tanulja meg, milyen átlendülni a nehezén, és a nehéz egyszer mindenkinek megérkezik."},
+      {label:"Falat keresek neki: verseny, emelt szint, valami, ami NEM megy elsőre.", fx:{kit:2},
+       cons:"Az első kudarcnál majdnem feladja. Aztán ottmarad. Amit most tanul, hogy a „nem megy” után van folytatás, azt a talentum önmagában sosem adná meg."},
       {label:"Megkérem: tanítsa meg a padtársának. Aki tanít, kétszer tanul.", fx:{koz:1, kiv:1},
-       cons:"Kiderül: elmagyarázni nehezebb, mint tudni. És közben történik valami váratlan — barátja lesz."}
+       cons:"Kiderül: elmagyarázni nehezebb, mint tudni. És közben történik valami váratlan, barátja lesz."}
     ]},
   emb:{title:"Az osztály motorja",
-    text:"{gy} mindenkit ismer, mindent ő szervez, az osztály nélküle meg se mozdul. Közben a jegyei csúsznak — „majd megbeszélem a tanárral” — és tényleg megbeszéli.",
+    text:"{gy} mindenkit ismer, mindent ő szervez, az osztály nélküle meg se mozdul. Közben a jegyei csúsznak, „majd megbeszélem a tanárral”, és tényleg megbeszéli.",
     choices:[
-      {label:"Kevesebb szervezkedés, több tanulás — a barátok megvárják.", fx:{kit:1, koz:-1},
-       cons:"A jegyek rendbe jönnek. Csak közben halkul valami, ami ritkább kincs, mint a jó bizonyítvány. Vigyázz, ki ne kapcsold — hangold."},
-      {label:"A tehetségét teszem feladattá: vigye ő az osztályprojektet — felelősséggel, határidővel.", fx:{koz:1, kit:1},
-       cons:"Az első határidőt elcsúszza, a másodikat hozza. A szervezkedésből szervezés lett — a játékból képesség."},
-      {label:"Hagyom — ez a tehetsége, kár lenne belenyúlni.", fx:{onb:1, kit:-1},
-       cons:"Szárnyal a közösségben. De a tehetség irány nélkül csak forog. Hinni benne az első lépés — a második, hogy célt is kap."}
+      {label:"Kevesebb szervezkedés, több tanulás, a barátok megvárják.", fx:{kit:1, koz:-1},
+       cons:"A jegyek rendbe jönnek. Csak közben halkul valami, ami ritkább kincs, mint a jó bizonyítvány. Vigyázz, ki ne kapcsold, hangold."},
+      {label:"A tehetségét teszem feladattá: vigye ő az osztályprojektet, felelősséggel, határidővel.", fx:{koz:1, kit:1},
+       cons:"Az első határidőt elcsúszza, a másodikat hozza. A szervezkedésből szervezés lett, a játékból képesség."},
+      {label:"Hagyom, ez a tehetsége, kár lenne belenyúlni.", fx:{onb:1, kit:-1},
+       cons:"Szárnyal a közösségben. De a tehetség irány nélkül csak forog. Hinni benne az első lépés, a második, hogy célt is kap."}
     ]}
 };
 
-/* S2 — a középiskola-döntés (14 évesen, erősség-ízzel) */
+/* S2, a középiskola-döntés (14 évesen, erősség-ízzel) */
 const S2 = {
   title:"A nagy döntés: középiskola",
-  text:"Elérkezett a felvételi éve. {gy} {kor} éves, és el kell dönteni, hol tanul tovább. A rokonok, a tanárok, az internet — mindenki tudja a „helyes” választ. Csak épp mind mást.",
+  text:"Elérkezett a felvételi éve. {gy} {kor} éves, és el kell dönteni, hol tanul tovább. A rokonok, a tanárok, az internet, mindenki tudja a „helyes” választ. Csak épp mind mást.",
   flavor:{
     kez:"A műszaki suli nyílt napján felragyogott. A „jó nevű” gimié előtt csak hallgatott.",
-    kif:"Van egy hely, ahol dráma-tagozat van. És van egy, aminek a neve jól mutat majd — bárhol.",
+    kif:"Van egy hely, ahol dráma-tagozat van. És van egy, aminek a neve jól mutat majd, bárhol.",
     fej:"Bárhova felvennék. Pont ez a csapda: ha minden ajtó nyitva, könnyű a legfényesebbet választani a legjobb helyett.",
     emb:"Neki nem a tanterv számít, hanem hogy kikkel. És pont ezt nem írja egyetlen rangsor sem."
   },
   choices:[
-    {label:"Az elit gimnázium — a legerősebb papír, minden kapu nyitva marad.", fx:{kit:1, onb:-1}, school:"elit",
-     cons:"Erős hely, erős mezőny — sokat fog fejlődni. Egy dologra figyelj: a rangsor ne váljon mércévé otthon is. A gyereked nem egy helyezés."},
-    {label:"A hely, ahol az erőssége tantárgy — még ha messzebb is van, és senkit sem ismer ott.", fx:{onb:1, kiv:1}, school:"sajat",
+    {label:"Az elit gimnázium, a legerősebb papír, minden kapu nyitva marad.", fx:{kit:1, onb:-1}, school:"elit",
+     cons:"Erős hely, erős mezőny, sokat fog fejlődni. Egy dologra figyelj: a rangsor ne váljon mércévé otthon is. A gyereked nem egy helyezés."},
+    {label:"A hely, ahol az erőssége tantárgy, még ha messzebb is van, és senkit sem ismer ott.", fx:{onb:1, kiv:1}, school:"sajat",
      cons:"Az utazás fárasztó, az újrakezdés ijesztő. De életében először az iskola olyan, mintha róla szólna. Megéri a vonatjegyet."},
-    {label:"A közeli, megszokott — a haverok is oda mennek, mindenkinek egyszerűbb.", fx:{koz:1, kiv:-1}, school:"kozeli",
+    {label:"A közeli, megszokott, a haverok is oda mennek, mindenkinek egyszerűbb.", fx:{koz:1, kiv:-1}, school:"kozeli",
      cons:"Van, amikor tényleg a közeli a jó válasz. De ha csak kényelemből az, a gyerek is megérzi az üzenetét: „mindegy, hova mész.” Pedig nem mindegy."}
   ]
 };
 
-/* SBE — beilleszkedés az új középiskolába (14 évesen; a 14 évvel belépőknek ez az első jelenet) */
+/* SBE, beilleszkedés az új középiskolába (14 évesen; a 14 évvel belépőknek ez az első jelenet) */
 const SBE = {
   title:"Az első hetek az új suliban",
-  text:"{gy} megkezdte a középiskolát: új arcok, új tanárok, magasabb mérce. Este szűkszavú. Nem baj van — csak minden új egyszerre. Te mit teszel ezekben a hetekben?",
+  text:"{gy} megkezdte a középiskolát: új arcok, új tanárok, magasabb mérce. Este szűkszavú. Nem baj van, csak minden új egyszerre. Te mit teszel ezekben a hetekben?",
   choices:[
-    {label:"Az első rossz jegynél azonnal különtanár — nehogy lemaradjon.", fx:{kit:1, onb:-1},
+    {label:"Az első rossz jegynél azonnal különtanár, nehogy lemaradjon.", fx:{kit:1, onb:-1},
      cons:"A jegy rendbe jön. Csak az üzenetre figyelj, ami vele megy: „nem bízunk benne, hogy egyedül megoldja.” Néha a kivárás is nevelés."},
-    {label:"Két hétig csak kérdezek: kikkel ebédelt, mi volt jó ma — a jegyekről szó sem esik.", fx:{koz:1, onb:1},
-     cons:"Előbb ember, aztán tanuló. Aki biztonságban érzi magát, az teljesíteni is fog — ez a sorrend, és nem fordítva."},
-    {label:"Mélyvíz: szakkör, sport, diákkör — minél előbb legyen saját terepe.", fx:{kiv:1, koz:1},
+    {label:"Két hétig csak kérdezek: kikkel ebédelt, mi volt jó ma, a jegyekről szó sem esik.", fx:{koz:1, onb:1},
+     cons:"Előbb ember, aztán tanuló. Aki biztonságban érzi magát, az teljesíteni is fog, ez a sorrend, és nem fordítva."},
+    {label:"Mélyvíz: szakkör, sport, diákkör, minél előbb legyen saját terepe.", fx:{kiv:1, koz:1},
      cons:"Az első hetekben nyűgös érte. Fél év múlva pont ez a „saját terep” lesz az oka, hogy szeret odajárni."}
   ]
 };
 
 /* híd-mondatok: a suliválasztás visszaköszön a későbbi jelenetekben (folytonosság) */
 const BRIDGES = {
-  elit:"Az erős gimiben kemény a tempó — pörögnek a hetek.",
-  sajat:"Az új, távolabbi suliban végre otthon van — még ha az utazás fárasztó is.",
-  kozeli:"A megszokott suli kényelmes, körülötte a régi arcok — minden megy a maga útján."
+  elit:"Az erős gimiben kemény a tempó, pörögnek a hetek.",
+  sajat:"Az új, távolabbi suliban végre otthon van, még ha az utazás fárasztó is.",
+  kozeli:"A megszokott suli kényelmes, körülötte a régi arcok, minden megy a maga útján."
 };
 
-/* S3 — a kihívás-jelenet (kihívásonként, ~középiskola közepe) */
+/* S3, a kihívás-jelenet (kihívásonként, ~középiskola közepe) */
 const S3 = {
   porgo:{title:"Három tanár, egy panasz",
-    text:"Egy hónapon belül három tanár is jelez: {gy} „nem bír megülni, szétszedi az órát”. Otthon közben fél délután alatt összerak egy működő áramkört. Nem rossz gyerek — csak sok neki az ülés.",
+    text:"Egy hónapon belül három tanár is jelez: {gy} „nem bír megülni, szétszedi az órát”. Otthon közben fél délután alatt összerak egy működő áramkört. Nem rossz gyerek, csak sok neki az ülés.",
     choices:[
-      {label:"Majd kinövi — kamaszkor, mindenki ilyen volt.", fx:{koz:-1},
-       cons:"Nem növi ki magától — csak rákerül egy címke: „a problémás”. És a címke ragad. Ennek a gyereknek nem kevesebb figyelem kell, hanem irány."},
-      {label:"Az energiának kiutat keresek: sport, robotika, színpad — ami tényleg leköti.", fx:{kit:1, kiv:1},
-       cons:"Ahol pörögni szabad, ott a „sok” hirtelen hajtóerő lesz. Nem a gyerek volt túl sok — a mozgástér volt túl kevés."},
+      {label:"Majd kinövi, kamaszkor, mindenki ilyen volt.", fx:{koz:-1},
+       cons:"Nem növi ki magától, csak rákerül egy címke: „a problémás”. És a címke ragad. Ennek a gyereknek nem kevesebb figyelem kell, hanem irány."},
+      {label:"Az energiának kiutat keresek: sport, robotika, színpad, ami tényleg leköti.", fx:{kit:1, kiv:1},
+       cons:"Ahol pörögni szabad, ott a „sok” hirtelen hajtóerő lesz. Nem a gyerek volt túl sok, a mozgástér volt túl kevés."},
       {label:"Környezetet nézünk: előbb szakemberrel, aztán ha kell, másik osztály vagy befogadóbb közösség.", fx:{koz:1},
-       cons:"Kiderül, mi segít valójában — és az szinte sosem a kevesebb közösség, hanem a jobb. A gyors megoldás helyett a jót választottad, pedig az a nehezebb."}
+       cons:"Kiderül, mi segít valójában, és az szinte sosem a kevesebb közösség, hanem a jobb. A gyors megoldás helyett a jót választottad, pedig az a nehezebb."}
     ]},
   unja:{title:"A fal, ami még nem jött el",
-    text:"Az első félév simán megy — {gy} mindent kapásból megold. Tanulni sosem látod. „Minek, úgyis tudom.” És igaza van. Egyelőre.",
+    text:"Az első félév simán megy, {gy} mindent kapásból megold. Tanulni sosem látod. „Minek, úgyis tudom.” És igaza van. Egyelőre.",
     choices:[
-      {label:"Örülök — legalább nem stresszel. Majd tanul, ha kell.", fx:{kit:-1},
-       cons:"A fal egyszer mindenkinek megérkezik — érettségin, egyetemen, munkában. Aki előtte sosem küzdött, annak nem a tudása kevés ott, hanem a gyakorlata a küzdelemben."},
-      {label:"Falat építek neki én — emelt szint, verseny, valami, ahol a tehetség kevés. Most, amíg olcsó a hiba.", fx:{kit:2},
-       cons:"Először dühös: „minek ez nekem?” Aztán egyszer nem megy elsőre valami — és másodszorra megcsinálja. Ez az érzés, az átlendülés öröme, mostantól az övé."},
-      {label:"Megkeresem, mi érdekli IGAZÁN — és abban engedem olyan mélyre, ahol már neki is nehéz.", fx:{kiv:1, kit:1},
-       cons:"A saját témájában önként megy neki a falnak — és élvezi. A kíváncsiság a legjobb edző: nem kell hajtani azt, akit húz valami."}
+      {label:"Örülök, legalább nem stresszel. Majd tanul, ha kell.", fx:{kit:-1},
+       cons:"A fal egyszer mindenkinek megérkezik, érettségin, egyetemen, munkában. Aki előtte sosem küzdött, annak nem a tudása kevés ott, hanem a gyakorlata a küzdelemben."},
+      {label:"Falat építek neki én, emelt szint, verseny, valami, ahol a tehetség kevés. Most, amíg olcsó a hiba.", fx:{kit:2},
+       cons:"Először dühös: „minek ez nekem?” Aztán egyszer nem megy elsőre valami, és másodszorra megcsinálja. Ez az érzés, az átlendülés öröme, mostantól az övé."},
+      {label:"Megkeresem, mi érdekli IGAZÁN, és abban engedem olyan mélyre, ahol már neki is nehéz.", fx:{kiv:1, kit:1},
+       cons:"A saját témájában önként megy neki a falnak, és élvezi. A kíváncsiság a legjobb edző: nem kell hajtani azt, akit húz valami."}
     ]},
   szorong:{title:"A dolgozat előtti este",
-    text:"Este tíz van, és {gy} a kilencedik kört futja a jegyzetei fölött, gyomorfájásra panaszkodik. Nem a tudása kevés — a hibától fél. Holnap dolgozat, és ő már ma elbukott ezerszer, fejben.",
+    text:"Este tíz van, és {gy} a kilencedik kört futja a jegyzetei fölött, gyomorfájásra panaszkodik. Nem a tudása kevés, a hibától fél. Holnap dolgozat, és ő már ma elbukott ezerszer, fejben.",
     choices:[
-      {label:"Kiveszem a nyomás alól: felmentés, kimentés — csak ne szenvedjen.", fx:{kit:-1},
-       cons:"Ma este megkönnyebbül. De a félelem nem tűnik el attól, hogy kerüljük — csak nő. A védelem jólesik ma, és gyengít holnap."},
-      {label:"Kis tétekben edzünk hibázni — és elmesélem a saját legnagyobb bakimat is.", fx:{onb:2},
-       cons:"Amikor meghallja, hogy TE is rontottál el nagyot — és túlélted —, valami enged benne. A hiba nem a világ vége. Bizonyíték rá a saját szülője."},
-      {label:"Több gyakorlás kell — ha elég felkészült, majd megnyugszik.", fx:{kit:1, onb:-1},
-       cons:"Készül még többet — és még többet fél. A szorongást nem a tudás hiánya okozza, hanem a mérce. A terhelés jó szolga, de itt nem ez a zár kulcsa."}
+      {label:"Kiveszem a nyomás alól: felmentés, kimentés, csak ne szenvedjen.", fx:{kit:-1},
+       cons:"Ma este megkönnyebbül. De a félelem nem tűnik el attól, hogy kerüljük, csak nő. A védelem jólesik ma, és gyengít holnap."},
+      {label:"Kis tétekben edzünk hibázni, és elmesélem a saját legnagyobb bakimat is.", fx:{onb:2},
+       cons:"Amikor meghallja, hogy TE is rontottál el nagyot, és túlélted, valami enged benne. A hiba nem a világ vége. Bizonyíték rá a saját szülője."},
+      {label:"Több gyakorlás kell, ha elég felkészült, majd megnyugszik.", fx:{kit:1, onb:-1},
+       cons:"Készül még többet, és még többet fél. A szorongást nem a tudás hiánya okozza, hanem a mérce. A terhelés jó szolga, de itt nem ez a zár kulcsa."}
     ]},
   vissza:{title:"A zárt ajtó",
     text:"Eltelt az első félév, és {gy} még senkit sem hívott át magához. Délutánonként a szobájában van, „a barátaim online vannak”. Nem boldogtalan. De egyre halkabb.",
     choices:[
-      {label:"Beíratom egy nagy csapatsportba — majd ott megtanul ismerkedni.", fx:{onb:-1, koz:1},
-       cons:"Jár, mert kell. Közösség lett — csak nem az övé. A tömeg nem gyógyítja a magányt, néha még hangosabbá teszi. Az ajtót nem kifelé kell törni, hanem belülről nyitni."},
+      {label:"Beíratom egy nagy csapatsportba, majd ott megtanul ismerkedni.", fx:{onb:-1, koz:1},
+       cons:"Jár, mert kell. Közösség lett, csak nem az övé. A tömeg nem gyógyítja a magányt, néha még hangosabbá teszi. Az ajtót nem kifelé kell törni, hanem belülről nyitni."},
       {label:"A SAJÁT témája mentén keresek neki kis kört: szakkör, tábor, ahol a közös téma a jégtörő.", fx:{koz:2},
-       cons:"Ahol a téma közös, a beszélgetés magától indul. Három hét múlva először mondja: „átjöhet valaki?” Nem társaságot adtál neki — kapcsolódást."},
-      {label:"Hagyom — online is emberek vannak, ez az ő világa.", fx:{kiv:1, koz:-1},
-       cons:"Részben igazad van: ott is barátok, ott is közösség. De a képernyő nem tanít kézfogást, vitát, kibékülést. A fele megvan — a másik felét neked kell odaépíteni."}
+       cons:"Ahol a téma közös, a beszélgetés magától indul. Három hét múlva először mondja: „átjöhet valaki?” Nem társaságot adtál neki, kapcsolódást."},
+      {label:"Hagyom, online is emberek vannak, ez az ő világa.", fx:{kiv:1, koz:-1},
+       cons:"Részben igazad van: ott is barátok, ott is közösség. De a képernyő nem tanít kézfogást, vitát, kibékülést. A fele megvan, a másik felét neked kell odaépíteni."}
     ]},
 };
 
-/* S4 — közös: a „majd holnap” (kényelem-csapda hétköznapi éle) */
+/* S4, közös: a „majd holnap” (kényelem-csapda hétköznapi éle) */
 const S4 = {
   title:"„Ma nem megyek”",
   text:"{akt} estéje, {gy} a kanapén: „Ma hagyjuk ki. Fáradt vagyok.” Nem beteg, nem történt semmi. Egyszerűen nincs kedve. Ismerős?",
   choices:[
-    {label:"Hagyom, pihenjen — egy kihagyás igazán belefér.", fx:{kit:-1},
-     cons:"Belefér. Aztán jövő héten kettő fér bele. A feladás is izom — és az is edződik, minden egyes „majd holnap”-pal. Nem a mai este a tét, hanem a minta."},
-    {label:"Megyünk, fáradtan is — sokszor csak elindulni nincs kedv. Hazafelé azért rákérdezek: fáradt voltál, vagy nem jó ott?", fx:{kit:2},
-     cons:"Kiderül: tényleg csak az elindulás volt nehéz — a végére felpörgött. De a kérdésed a fontosabb: ha egyszer valóban rossz helyen lesz, tudni fogja, hogy neked el lehet mondani."},
-    {label:"Szólok a csapattársának: menjenek együtt — társakkal minden könnyebb.", fx:{koz:1, kit:1},
-     gate:{stat:"koz", min:5, note:"🔒 Ez az út azoknak nyílik meg, akiknél a barátok végig ott voltak a döntésekben — a közösség nem vészhelyzetben épül, hanem előtte."},
-     cons:"A haver becsönget, {gy} felpattan. Amit az akaraterő nem húz el, azt a barátság elviszi. Ezért éri meg közösséget építeni — előre."}
+    {label:"Hagyom, pihenjen, egy kihagyás igazán belefér.", fx:{kit:-1},
+     cons:"Belefér. Aztán jövő héten kettő fér bele. A feladás is izom, és az is edződik, minden egyes „majd holnap”-pal. Nem a mai este a tét, hanem a minta."},
+    {label:"Megyünk, fáradtan is, sokszor csak elindulni nincs kedv. Hazafelé azért rákérdezek: fáradt voltál, vagy nem jó ott?", fx:{kit:2},
+     cons:"Kiderül: tényleg csak az elindulás volt nehéz, a végére felpörgött. De a kérdésed a fontosabb: ha egyszer valóban rossz helyen lesz, tudni fogja, hogy neked el lehet mondani."},
+    {label:"Szólok a csapattársának: menjenek együtt, társakkal minden könnyebb.", fx:{koz:1, kit:1},
+     gate:{stat:"koz", min:5, note:"🔒 Ez az út azoknak nyílik meg, akiknél a barátok végig ott voltak a döntésekben, a közösség nem vészhelyzetben épül, hanem előtte."},
+     cons:"A haver becsönget, {gy} felpattan. Amit az akaraterő nem húz el, azt a barátság elviszi. Ezért éri meg közösséget építeni, előre."}
   ]
 };
 
-/* S5 — 18 évesen: a rajtvonal */
+/* S5, 18 évesen: a rajtvonal */
 const S5 = {
   title:"A rajtvonal",
-  text:"{gy} 18 éves. Érettségi előtt ülepszik a nagy kérdés: egyetem? szakma? munka? külföld? Mindenkinek van véleménye. De ez már az ő élete — te legfeljebb az utolsó métereken igazíthatsz.",
+  text:"{gy} 18 éves. Érettségi előtt ülepszik a nagy kérdés: egyetem? szakma? munka? külföld? Mindenkinek van véleménye. De ez már az ő élete, te legfeljebb az utolsó métereken igazíthatsz.",
   flavor:{
-    kez:"A keze már most pénzt érne — de a fejében is több van, mint hinné.",
+    kez:"A keze már most pénzt érne, de a fejében is több van, mint hinné.",
     kif:"A színpad hívja, a „biztos pálya” meg nyomasztja. Mindkét irányba van jegye.",
-    fej:"Bárhová felvennék. A kérdés nem az, hogy MIT tud — hanem hogy MIT akar.",
+    fej:"Bárhová felvennék. A kérdés nem az, hogy MIT tud, hanem hogy MIT akar.",
     emb:"Akárhová megy, ott közösség lesz körülötte. A kérdés: mire használja?"
   },
   choices:[
-    {label:"A saját, merészebb tervét választja — mert elhiszi magáról, hogy képes rá.", fx:{onb:1, kiv:1},
-     gate:{stat:"onb", min:7, note:"🔒 Ehhez az kellett volna, hogy elhiggye: képes rá. Az önbizalom nem 18 évesen terem — az előző tíz évben épül. Ezért számított minden korábbi döntés."},
+    {label:"A saját, merészebb tervét választja, mert elhiszi magáról, hogy képes rá.", fx:{onb:1, kiv:1},
+     gate:{stat:"onb", min:7, note:"🔒 Ehhez az kellett volna, hogy elhiggye: képes rá. Az önbizalom nem 18 évesen terem, az előző tíz évben épül. Ezért számított minden korábbi döntés."},
      cons:"Kockázatos, és te is nyelsz egyet. De egy fiatal, aki mer a saját tervére tenni, már megnyerte a legfontosabbat: ő dönt a saját életéről."},
-    {label:"Biztos alap, ami az erősségére épül — egyetem vagy szakma, de az Ő terepén.", fx:{kit:1, kiv:1},
-     cons:"Nem a legfényesebb út, hanem az, amelyik illik rá. Öt év múlva nem azt kérdezi majd, „minek csináltam” — hanem azt, „hogyan tovább”. Ez a jó kérdés."},
-    {label:"Egy év céllal: munka, nyelv, világ — tervvel, nem sodródva.", fx:{kit:1, koz:1},
+    {label:"Biztos alap, ami az erősségére épül, egyetem vagy szakma, de az Ő terepén.", fx:{kit:1, kiv:1},
+     cons:"Nem a legfényesebb út, hanem az, amelyik illik rá. Öt év múlva nem azt kérdezi majd, „minek csináltam”, hanem azt, „hogyan tovább”. Ez a jó kérdés."},
+    {label:"Egy év céllal: munka, nyelv, világ, tervvel, nem sodródva.", fx:{kit:1, koz:1},
      cons:"A rokonok forgatják a szemüket. Aztán a gyereked egy év múlva két nyelvvel, munkatapasztalattal és iránnyal jön haza. A „kihagyott év” csak annak veszik el, aki elsodródik benne."}
   ]
 };
 
-/* SON — az első önálló évek (20 évesen) */
+/* SON, az első önálló évek (20 évesen) */
 const SON = {
   title:"Az első önálló évek",
-  text:"{gy} 20 éves — egyetem, munka, albérlet-tervek. Már nem nevelsz: támogatsz. És itt a kérdés, amit minden szülő magának tesz fel: mennyit adjak, és mennyit hagyjak neki?",
+  text:"{gy} 20 éves, egyetem, munka, albérlet-tervek. Már nem nevelsz: támogatsz. És itt a kérdés, amit minden szülő magának tesz fel: mennyit adjak, és mennyit hagyjak neki?",
   choices:[
-    {label:"Mindent fizetek — csak arra figyeljen, ami előtte van.", fx:{kit:-1},
-     cons:"Jó szándék, és sokat segít. Csak közben a felelősség is tantárgy — és azt nem lehet helyette megírni. A kényelem most is csapda, csak már drágább."},
-    {label:"Az alap jön tőlünk, a többiért megdolgozik — és nyíltan megbeszéljük, mi mire elég.", fx:{kit:1, onb:1},
+    {label:"Mindent fizetek, csak arra figyeljen, ami előtte van.", fx:{kit:-1},
+     cons:"Jó szándék, és sokat segít. Csak közben a felelősség is tantárgy, és azt nem lehet helyette megírni. A kényelem most is csapda, csak már drágább."},
+    {label:"Az alap jön tőlünk, a többiért megdolgozik, és nyíltan megbeszéljük, mi mire elég.", fx:{kit:1, onb:1},
      cons:"Az első saját pénz többet tanít bármelyik szemeszternél. És láthatóan büszkébb rá, mint bármelyik jegyére volt."},
-    {label:"Felnőtt — rá bízom teljesen, oldja meg.", fx:{onb:1, koz:-1},
-     cons:"Az önállóság fontos. De az „oldd meg egyedül” és a „számíthatsz ránk” nem ellentétek — a háló nem gyengíti a kötéltáncost."}
+    {label:"Felnőtt, rá bízom teljesen, oldja meg.", fx:{onb:1, koz:-1},
+     cons:"Az önállóság fontos. De az „oldd meg egyedül” és a „számíthatsz ránk” nem ellentétek, a háló nem gyengíti a kötéltáncost."}
   ]
 };
 
 /* ===== 15+ ÉV: a rajtvonal utáni évek ===== */
 const F19 = {
   title:"Az elengedett kéz",
-  text:"{gy} elköltözött — kollégium, albérlet, első önálló hónapok. A lakás furcsán csendes. A kérdés már nem az, hogy mit engedsz meg neki. Hanem hogy milyen kapocs marad, amikor már nem te vagy a keret.",
+  text:"{gy} elköltözött, kollégium, albérlet, első önálló hónapok. A lakás furcsán csendes. A kérdés már nem az, hogy mit engedsz meg neki. Hanem hogy milyen kapocs marad, amikor már nem te vagy a keret.",
   choices:[
-    {label:"Naponta hívom — tudni akarom, hogy minden rendben van.", fx:{koz:1, onb:-1},
-     cons:"A törődés átjön — de a napi ellenőrzés azt is üzeni: „nem hiszem el, hogy megállsz a lábadon.” A jelenlét nem gyakoriság kérdése."},
-    {label:"Heti rituálé: vasárnap esti hívás — ott vagyok, de nem lihegek.", fx:{koz:2},
-     cons:"A vasárnapi hívás intézmény lesz. Nem kötelesség — kapaszkodó. És ha egyszer tényleg baj van, nem az jut eszébe, hogy „mit szólnak otthon” — hanem a telefonszámod."},
-    {label:"Majd jelentkezik, ha kell valami — felnőtt már.", fx:{onb:1, koz:-1},
-     cons:"Önállónak önálló. De a szabadság és a magára-hagyottság között hajszál a különbség: az, hogy tudja-e — van hová visszanyúlni. Mondd ki neki, ne csak gondold."}
+    {label:"Naponta hívom, tudni akarom, hogy minden rendben van.", fx:{koz:1, onb:-1},
+     cons:"A törődés átjön, de a napi ellenőrzés azt is üzeni: „nem hiszem el, hogy megállsz a lábadon.” A jelenlét nem gyakoriság kérdése."},
+    {label:"Heti rituálé: vasárnap esti hívás, ott vagyok, de nem lihegek.", fx:{koz:2},
+     cons:"A vasárnapi hívás intézmény lesz. Nem kötelesség, kapaszkodó. És ha egyszer tényleg baj van, nem az jut eszébe, hogy „mit szólnak otthon”, hanem a telefonszámod."},
+    {label:"Majd jelentkezik, ha kell valami, felnőtt már.", fx:{onb:1, koz:-1},
+     cons:"Önállónak önálló. De a szabadság és a magára-hagyottság között hajszál a különbség: az, hogy tudja-e, van hová visszanyúlni. Mondd ki neki, ne csak gondold."}
   ]
 };
 
 const F22 = {
   title:"A nagy váltás",
-  text:"{gy} {kor} évesen felhív: fel akarja mondani a biztos első munkahelyét — jött egy bizonytalanabb, de izgalmasabb lehetőség. Nem engedélyt kér. Azt akarja tudni, mit gondolsz.",
+  text:"{gy} {kor} évesen felhív: fel akarja mondani a biztos első munkahelyét, jött egy bizonytalanabb, de izgalmasabb lehetőség. Nem engedélyt kér. Azt akarja tudni, mit gondolsz.",
   choices:[
     {label:"Maradj! Az első években a stabilitás mindennél többet ér.", fx:{kit:1, onb:-1},
-     cons:"Lehet, hogy igazad van — de ha a TE félelmed dönt az Ő élete helyett, azt később mindketten megérzitek. A tanács akkor ér a legtöbbet, ha kérdésekkel kezdődik."},
-    {label:"Nem tanácsolok — kérdezek: mi húz oda? Mi tart itt? Mi a legrosszabb, ami történhet?", fx:{onb:1, kiv:1},
-     cons:"A harmadik kérdésnél hallod, ahogy a hangja megnyugszik. A döntést ő hozza meg — de veled gondolkodta végig. Ennél több egy szülőnek ilyenkor nem jár. És nem is kell."},
-    {label:"„Bármit döntesz, mögötted állunk” — mondom, kérdés nélkül.", fx:{koz:1},
-     cons:"A feltétlen támogatás sokat ér — de a „bármit csinálsz, jó” olcsóvá is válhat. A mögötte-állás akkor a legerősebb, ha előtte végig is gondoltátok együtt."}
+     cons:"Lehet, hogy igazad van, de ha a TE félelmed dönt az Ő élete helyett, azt később mindketten megérzitek. A tanács akkor ér a legtöbbet, ha kérdésekkel kezdődik."},
+    {label:"Nem tanácsolok, kérdezek: mi húz oda? Mi tart itt? Mi a legrosszabb, ami történhet?", fx:{onb:1, kiv:1},
+     cons:"A harmadik kérdésnél hallod, ahogy a hangja megnyugszik. A döntést ő hozza meg, de veled gondolkodta végig. Ennél több egy szülőnek ilyenkor nem jár. És nem is kell."},
+    {label:"„Bármit döntesz, mögötted állunk”, mondom, kérdés nélkül.", fx:{koz:1},
+     cons:"A feltétlen támogatás sokat ér, de a „bármit csinálsz, jó” olcsóvá is válhat. A mögötte-állás akkor a legerősebb, ha előtte végig is gondoltátok együtt."}
   ]
 };
 
-/* S6 — a visszatekintés (a gyerek {kor} éves) */
+/* S6, a visszatekintés (a gyerek {kor} éves) */
 const S6 = {
   title:"„Jó úton vagyok?”",
-  text:"{gy} már {kor} éves. Aki egyetemre ment az évfolyamából, az most diplomázik — aki dolgozni kezdett, annak már évek tapasztalata van. Egy este leül veled: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.",
+  text:"{gy} már {kor} éves. Aki egyetemre ment az évfolyamából, az most diplomázik, aki dolgozni kezdett, annak már évek tapasztalata van. Egy este leül veled: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.",
   choices:[
-    {label:"Végigvesszük együtt, mi mindenen ment már át — a bizonyíték ő maga.", fx:{onb:2},
-     cons:"Ahogy sorolod — az első fellépés, az első kudarc, az első újrakezdés —, látod, ahogy kihúzza magát. Aki tudja, honnan jött, nem fél attól, hova tart."},
-    {label:"Elmondom: a bizonytalanság nem hiba — minden fontos dolog így kezdődik.", fx:{kit:1, kiv:1},
-     cons:"„Én is így kezdtem mindent, ami ma számít” — mondod. A világ tíz év múlva megint más lesz. A legjobb útravaló, hogy az ismeretlentől nem félni kell — kérdezni tőle."},
-    {label:"Nem mondok semmit. Meghallgatom — végig.", fx:{koz:2},
-     cons:"Nem oldasz meg semmit, csak ott vagy. Másnap felhív: „rájöttem, mit akarok.” A válasz mindig benne volt — tőled azt kapta, hogy volt kinek kimondania."}
+    {label:"Végigvesszük együtt, mi mindenen ment már át, a bizonyíték ő maga.", fx:{onb:2},
+     cons:"Ahogy sorolod, az első fellépés, az első kudarc, az első újrakezdés. Látod, ahogy kihúzza magát. Aki tudja, honnan jött, nem fél attól, hova tart."},
+    {label:"Elmondom: a bizonytalanság nem hiba, minden fontos dolog így kezdődik.", fx:{kit:1, kiv:1},
+     cons:"„Én is így kezdtem mindent, ami ma számít”, mondod. A világ tíz év múlva megint más lesz. A legjobb útravaló, hogy az ismeretlentől nem félni kell, kérdezni tőle."},
+    {label:"Nem mondok semmit. Meghallgatom, végig.", fx:{koz:2},
+     cons:"Nem oldasz meg semmit, csak ott vagy. Másnap felhív: „rájöttem, mit akarok.” A válasz mindig benne volt, tőled azt kapta, hogy volt kinek kimondania."}
   ]
 };
 
 /* ============ ARCHETÍPUSOK ============ */
 const ARCH = {
-  "kit|onb":{e:"💎", n:"A Megvalósító", d:"Abból él, amit be is fejez. Nem a legtehetségesebb a szobában — hanem az, aki a tehetségét eredménnyé váltja. Te adtad hozzá a hitet ÉS a terhelést: a kettő együtt verhetetlen."},
-  "kit|kiv":{e:"🔬", n:"A Mélybúvár", d:"Amihez hozzáér, a végére jár. A felszínes korban ő az, aki tényleg ért valamihez — mélyen. Te tanítottad meg, hogy a kíváncsiságot türelemmel párosítsa."},
+  "kit|onb":{e:"💎", n:"A Megvalósító", d:"Abból él, amit be is fejez. Nem a legtehetségesebb a szobában, hanem az, aki a tehetségét eredménnyé váltja. Te adtad hozzá a hitet ÉS a terhelést: a kettő együtt verhetetlen."},
+  "kit|kiv":{e:"🔬", n:"A Mélybúvár", d:"Amihez hozzáér, a végére jár. A felszínes korban ő az, aki tényleg ért valamihez, mélyen. Te tanítottad meg, hogy a kíváncsiságot türelemmel párosítsa."},
   "kit|koz":{e:"🏛️", n:"Az Építő", d:"Csapatokat és dolgokat épít, amikre számítani lehet. Nála a „megígértem” szentírás. Te adtad neki a ritka párost: kitartást és felelősséget másokért."},
-  "kiv|onb":{e:"🚀", n:"Az Úttörő", d:"Oda is bemegy, ahol még nincs térkép. Mer újat próbálni, mert elhiszi, hogy menni fog — és általában megy is. Te hitetted el vele, hogy a világ felfedezhető."},
-  "koz|onb":{e:"⭐", n:"A Vezéregyéniség", d:"Emberek mennek utána, mert mellette ők is bátrabbak. Nem hangos — biztos. Te adtad neki azt az önbizalmat, amiből másoknak is jut."},
+  "kiv|onb":{e:"🚀", n:"Az Úttörő", d:"Oda is bemegy, ahol még nincs térkép. Mer újat próbálni, mert elhiszi, hogy menni fog, és általában megy is. Te hitetted el vele, hogy a világ felfedezhető."},
+  "koz|onb":{e:"⭐", n:"A Vezéregyéniség", d:"Emberek mennek utána, mert mellette ők is bátrabbak. Nem hangos, biztos. Te adtad neki azt az önbizalmat, amiből másoknak is jut."},
   "kiv|koz":{e:"🌍", n:"A Hídverő", d:"Embereket, témákat, világokat köt össze. Ott ver hidat, ahol mások falat húznak. Te tanítottad meg, hogy kíváncsinak lenni együtt a legjobb."}
 };
 
 const TIPS = {
-  kit:"A kitartás nem a nehézségtől nő, hanem a LEGYŐZÖTT nehézségtől. Adj olyan feladatot, ami épp csak egy kicsit nehéz — és légy ott, amikor sikerül. A győzelem élménye a hajtóanyag.",
-  onb:"Az önbizalom nem dicséretből épül, hanem valódi teljesítményből. Keresd meg, miben jó — és hagyd, hogy ott kimagasló lehessen. A többi terület ebből merít majd erőt.",
+  kit:"A kitartás nem a nehézségtől nő, hanem a LEGYŐZÖTT nehézségtől. Adj olyan feladatot, ami épp csak egy kicsit nehéz, és légy ott, amikor sikerül. A győzelem élménye a hajtóanyag.",
+  onb:"Az önbizalom nem dicséretből épül, hanem valódi teljesítményből. Keresd meg, miben jó, és hagyd, hogy ott kimagasló lehessen. A többi terület ebből merít majd erőt.",
   kiv:"A kíváncsiság a legdrágább, amit egy gyerek elveszíthet. Ne a jó választ jutalmazd, hanem a jó KÉRDÉST. Egy „nem tudom, találjuk ki együtt” többet ér száz kész válasznál.",
-  koz:"A tehetség közösségben csiszolódik. Ha a gyereked „túl sok” vagy „túl halk” egy helynek, nem kevesebb ember kell neki — hanem jobb kör: ahol a téma közös, a kapcsolódás magától jön."
+  koz:"A tehetség közösségben csiszolódik. Ha a gyereked „túl sok” vagy „túl halk” egy helynek, nem kevesebb ember kell neki, hanem jobb kör: ahol a téma közös, a kapcsolódás magától jön."
 };
 
 /* ============ MOTOR ============ */
@@ -524,10 +524,10 @@ function renderIntro(){
     <div class="hero">
       <div class="big">🧭</div>
       <h1>Éld le a gyereked<br><span>következő 10 évét.</span></h1>
-      <p class="sub">Tíz év, ami eldönti, milyen felnőtt lesz belőle — és rengeteg apró döntés, ami rád vár. Nincs tökéletes szülő, és nincs egyetlen helyes út. De van, amit ma másképp kezdhetsz.<br><br>Nézzük, <b>te</b> merre viszed.</p>
+      <p class="sub">Tíz év, ami eldönti, milyen felnőtt lesz belőle, és rengeteg apró döntés, ami rád vár. Nincs tökéletes szülő, és nincs egyetlen helyes út. De van, amit ma másképp kezdhetsz.<br><br>Nézzük, <b>te</b> merre viszed.</p>
       <input class="namefield" id="pname" maxlength="20" placeholder="A gyereked beceneve (nem kötelező)">
       <input class="namefield" id="page" type="number" min="1" max="25" placeholder="Hány éves?" value="${urlAge?urlAge:""}">
-      <p class="hint">A becenevet nem tároljuk — csak a te képernyődön jelenik meg.</p>
+      <p class="hint">A becenevet nem tároljuk, csak a te képernyődön jelenik meg.</p>
       <button class="next" onclick="startGame()">Kezdjük! →</button>
     </div>`;
 }
@@ -536,8 +536,8 @@ function startGame(){
   S.name = ($("pname").value || "").trim();
   const a = parseInt($("page").value, 10);
   if(!a || a < 1 || a > 25){ $("page").focus(); $("page").style.borderColor = "var(--c3)"; return; }
-  if(a < 5) return renderTooYoung(a, 5, "A legkisebbeknek külön verzió készül — addig az 5 évesekét ajánljuk: ott az első nagy döntés az iskolaválasztás.", "Hamarosan nálatok is! 🌱");
-  if(a > 18) return renderTooYoung(a, 15, "Ő már (majdnem) felnőtt — de a játék így is tanulságos: nézd meg, te mit tennél ma másképp.", "Ezt a tíz évet már éltétek 💛");
+  if(a < 5) return renderTooYoung(a, 5, "A legkisebbeknek külön verzió készül, addig az 5 évesekét ajánljuk: ott az első nagy döntés az iskolaválasztás.", "Hamarosan nálatok is! 🌱");
+  if(a > 18) return renderTooYoung(a, 15, "Ő már (majdnem) felnőtt, de a játék így is tanulságos: nézd meg, te mit tennél ma másképp.", "Ezt a tíz évet már éltétek 💛");
   S.age = a;
   renderStrength();
 }
@@ -548,8 +548,8 @@ function renderTooYoung(a, target, msg, cim){
     <div class="card">
       <h2>${cim}</h2>
       <p class="story">${msg}</p>
-      <p class="hint">Hagyd itt az emailed, és szólunk, amint a hozzátok illő verzió elkészül — addig kipróbálhatod így: mintha ${gyName()} most ${target} éves lenne.</p>
-      <input class="fin" id="waitmail" type="email" placeholder="Email — értesítést kérek">
+      <p class="hint">Hagyd itt az emailed, és szólunk, amint a hozzátok illő verzió elkészül, addig kipróbálhatod így: mintha ${gyName()} most ${target} éves lenne.</p>
+      <input class="fin" id="waitmail" type="email" placeholder="Email, értesítést kérek">
       <button class="next" onclick="waitlist()">Értesítsetek! ✉️</button>
       <button class="ghost" onclick="S.age=S._target; renderStrength()">Kipróbálom így is →</button>
     </div>`;
@@ -586,7 +586,7 @@ function renderStrength(){
 
 function pickStrength(k){
   S.strength = k;
-  S.stats[STRENGTHS[k].boost] += 1;   // az erősség kezdőtőkét ad — a "csupa barát" gyerek magasabb Közösséggel indul
+  S.stats[STRENGTHS[k].boost] += 1;   // az erősség kezdőtőkét ad, a "csupa barát" gyerek magasabb Közösséggel indul
   S.log.push({y:"2026", text:STRENGTHS[k].e + " Ragyog: " + STRENGTHS[k].n.toLowerCase()});
   renderChallenge();
 }
@@ -597,7 +597,7 @@ function renderChallenge(){
     <div class="card">
       <span class="yearchip">2/2</span>
       <h2>És hol nehéz neki?</h2>
-      <p class="hint">A legtöbb gyerek több ezekből — most azt válaszd, ami MA a legjellemzőbb rá.</p>
+      <p class="hint">A legtöbb gyerek több ezekből, most azt válaszd, ami MA a legjellemzőbb rá.</p>
       <div class="choices">
         ${Object.keys(CHALLENGES).map(k => `
           <button class="choice pathbtn" onclick="pickChallenge('${k}')">
@@ -620,12 +620,12 @@ function pickChallenge(k){
 /* ---- MESTER-IDŐVONAL: minden jelenet életkorhoz horgonyozva ----
    A játékos a belépési kortól számított 10 éves ablakát játssza le.
    Aki 11 évesen lép be, annál a felvételi a 2-3. kérdés; aki 13-nál, ott az első;
-   aki 14-nél, az már átugrotta — nála a beilleszkedés indít, és több jut a fiatal
-   felnőtt évekből. A kérdések száma ezért 6 és 8 között változhat — ez szándékos. */
+   aki 14-nél, az már átugrotta, nála a beilleszkedés indít, és több jut a fiatal
+   felnőtt évekből. A kérdések száma ezért 6 és 8 között változhat, ez szándékos. */
 const TIMELINE = () => [
   {ev: K6,  age: 6},                                // iskolaválasztás (ovi vége)
   {ev: K7,  age: 7},                                // a képernyő
-  {ev: K9,  age: 9},                                // különóra vs. szabad idő — az egyensúly
+  {ev: K9,  age: 9},                                // különóra vs. szabad idő, az egyensúly
   {ev: K10, age: 10},                               // az első igazi kudarc
   {ev: S1[S.strength], age: 12},                    // az erősség első szikrája
   {ev: S2, age: 13},                                // a felvételi éve
@@ -639,9 +639,9 @@ const TIMELINE = () => [
 ];
 
 function s6Text(kor){
-  if(kor <= 16) return "{gy} már {kor} éves. Egy este leül melléd — és most nem a suliról kérdez, hanem magáról: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.";
-  if(kor <= 21) return "{gy} már {kor} éves. Az évfolyamtársai szétszéledtek — egyetem, munka, külföld; ki hol tart. Egy este leül veled: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.";
-  return "{gy} {kor} éves — az élete rég beindult: munka, kapcsolatok, saját döntések. Mégis egy este felhív: „Szerinted jó úton vagyok?” Van kérdés, amit az ember mindig a szüleinek tesz fel. Tíz éved döntései érnek össze ebben a percben.";
+  if(kor <= 16) return "{gy} már {kor} éves. Egy este leül melléd, és most nem a suliról kérdez, hanem magáról: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.";
+  if(kor <= 21) return "{gy} már {kor} éves. Az évfolyamtársai szétszéledtek, egyetem, munka, külföld; ki hol tart. Egy este leül veled: „Szerinted jó úton vagyok?” Tíz éved döntései érnek össze ebben a percben.";
+  return "{gy} {kor} éves, az élete rég beindult: munka, kapcsolatok, saját döntések. Mégis egy este felhív: „Szerinted jó úton vagyok?” Van kérdés, amit az ember mindig a szüleinek tesz fel. Tíz éved döntései érnek össze ebben a percben.";
 }
 
 function buildSeq(){
@@ -726,33 +726,33 @@ function renderProfile(){
     `<div class="pbar"><span>${STATS[k].e} ${STATS[k].n}</span>
       <span class="pb"><i data-w="${S.stats[k]*10}" style="background:${{kit:"var(--c1)",koz:"var(--c3)",kiv:"var(--c2)",onb:"var(--gold)"}[k]}"></i></span>
       <span class="pv">${S.stats[k]}</span></div>`).join("");
-  const recap = S.log.map(l => `<b>${l.y}</b> — ${l.text}`).join("<br>");
+  const recap = S.log.map(l => `<b>${l.y}</b>: ${l.text}`).join("<br>");
   $("screen").innerHTML = `
     <div class="card profile">
-      <span class="yearchip">2036 — ${who} ${endAge} éves</span>
+      <span class="yearchip">2036 · ${who} ${endAge} éves</span>
       <div class="arch-emoji">${arch.e}</div>
       <div class="arch-name">${arch.n}</div>
-      <p class="arch-desc"><b>${who}</b> — ${arch.d}</p>
+      <p class="arch-desc"><b>${who}</b>: ${arch.d}</p>
       <div class="score">Jövőállóság<br><span class="scorenum">${pct}%</span></div>
       <div class="pbars">${barsHtml}</div>
       <div class="tipbox"><b>Amin ma elkezdhetsz dolgozni:</b> ${TIPS[low]}</div>
       <div class="recap"><b>A ti 10 évetek:</b><br>${recap}</div>
-      <p class="disclaim">Ez játék, nem diagnózis — a gyereked ezerszer összetettebb, mint négy sáv. Akivé „vált”, azt a te döntéseid formálták itt is, ahogy az életben is.</p>
+      <p class="disclaim">Ez játék, nem diagnózis, a gyereked ezerszer összetettebb, mint négy sáv. Akivé „vált”, azt a te döntéseid formálták itt is, ahogy az életben is.</p>
       <button class="ghost" onclick="shareResult(this)" data-arch="${arch.n}" data-pct="${pct}">📤 Megosztom az eredményt (név nélkül)</button>
       <button class="ghost" onclick="newGame()">🔁 Újrajátszom</button>
     </div>
     <div class="card formcard" id="betacard">
       <h2>🔬 Béta-teszt: segíts egy mondattal</h2>
-      <p class="hint">Ez az app most tanul — a visszajelzéseddel rengeteg szülőnek segítesz:</p>
+      <p class="hint">Ez az app most tanul, a visszajelzéseddel rengeteg szülőnek segítesz:</p>
       <textarea class="fin" id="fmsg" placeholder="Egy mondat: Tetszett? Min gondolkodtatott el?"></textarea>
       <label class="chk"><input type="checkbox" id="c2"> A mondatom névtelenül megosztható, hogy másokat is elgondolkodtasson.</label>
       <p class="hint" style="margin-top:18px">Ha kéred, emailben elküldjük a részletes profilt, a kihívásotokhoz illő mini-útmutatót és a meghívót az <b>ingyenes szülői estre</b>, ahol mindezt élőben bogozzuk ki:</p>
       <input class="fin" id="femail" type="email" placeholder="Email">
-      <label class="chk"><input type="checkbox" id="c1" checked> Kíváncsi vagyok az összesített válaszokra is — küldjétek!</label>
+      <label class="chk"><input type="checkbox" id="c1" checked> Kíváncsi vagyok az összesített válaszokra is, küldjétek!</label>
       <input class="fin" id="fcity" placeholder="Város, ország (név nem kell)">
       <label class="chk"><input type="checkbox" id="c3" checked> Érdekel az ingyenes szülői est, írjatok, mikor lesz a környékemen.</label>
       <button class="next" onclick="sendForm()">Elküldöm + kérem a profilt ✉️</button>
-      <p class="gdpr">A gyerek becenevét nem tároljuk és nem küldjük el — csak az emailed és amit ide beírsz. Az adataidat kizárólag a fenti célokra használjuk, bármikor leiratkozhatsz.</p>
+      <p class="gdpr">A gyerek becenevét nem tároljuk és nem küldjük el, csak az emailed és amit ide beírsz. Az adataidat kizárólag a fenti célokra használjuk, bármikor leiratkozhatsz.</p>
     </div>`;
   requestAnimationFrame(() => requestAnimationFrame(() => {
     document.querySelectorAll(".pb i").forEach(i => i.style.width = i.dataset.w + "%");
@@ -772,7 +772,7 @@ function deliver(payload){
   } else {
     const body = Object.entries(data).map(([k,v]) => k + ": " + v).join("\n");
     location.href = "mailto:" + CONFIG.fallbackEmail +
-      "?subject=" + encodeURIComponent("Szülőpróba — béta visszajelzés") +
+      "?subject=" + encodeURIComponent("Szülőpróba, béta visszajelzés") +
       "&body=" + encodeURIComponent(body);
   }
 }
@@ -786,7 +786,7 @@ function sendForm(){
     est_erdekli:$("c3").checked ? "igen":"nem"});
   $("betacard").innerHTML = `
     <h2>Köszönjük! 💛</h2>
-    <p class="story">${em ? "Hamarosan megérkezik a profil és a meghívó. Segítettél" : "A visszajelzésed sokat ér — segítettél"} — és most egy kérdés:</p>
+    <p class="story">${em ? "Hamarosan megérkezik a profil és a meghívó. Segítettél" : "A visszajelzésed sokat ér, segítettél"}, és most egy kérdés:</p>
     <p class="story"><b>Ismersz még egy szülőt, akinek jólesne 10 perc önmagára?</b></p>
     <button class="next" onclick="shareResult(this)" data-arch="${S.result.arch}" data-pct="${S.result.pct}">📤 Küldöm neki a játékot</button>
     <button class="ghost" onclick="window.open(CONFIG.ctaUrl,'_blank')">📅 Megnézem a szülői esteket</button>`;
@@ -832,13 +832,13 @@ function buildShareImage(archName, pct){
     y += 92;
   }
   x.textAlign = "center"; x.font = "600 38px " + FONT; x.fillStyle = "#93a0c4";
-  x.fillText("Éld le a gyereked következő 10 évét — 10 percben", W/2, 1270);
+  x.fillText("Éld le a gyereked következő 10 évét 10 percben", W/2, 1270);
   x.fillStyle = "#22d3ee"; x.font = "700 40px " + FONT; x.fillText("futuretour.app", W/2, 1325);
   return new Promise(res => cv.toBlob(res, "image/png"));
 }
 
 async function shareResult(btn){
-  const text = `🧭 Szülőpróba: lejátszottam a gyerekem következő 10 évét — 2036-ra „${btn.dataset.arch}” lett (Jövőállóság: ${btn.dataset.pct}%). Játszd le te is a tiédét: ${location.origin + location.pathname}`;
+  const text = `🧭 Szülőpróba: lejátszottam a gyerekem következő 10 évét, 2036-ra „${btn.dataset.arch}” lett (Jövőállóság: ${btn.dataset.pct}%). Játszd le te is a tiédét: ${location.origin + location.pathname}`;
   try{
     const blob = await buildShareImage(btn.dataset.arch, btn.dataset.pct);
     const file = new File([blob], "szuloproba-eredmeny.png", {type:"image/png"});
@@ -849,11 +849,11 @@ async function shareResult(btn){
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob); a.download = "szuloproba-eredmeny.png"; a.click();
     if(navigator.clipboard) navigator.clipboard.writeText(text).catch(()=>{});
-    alert("A kép letöltődött, a szöveg a vágólapon — mehet a posztba! 📸");
+    alert("A kép letöltődött, a szöveg a vágólapon, mehet a posztba! 📸");
   }catch(e){
     if(e && e.name === "AbortError") return;   // a felhasználó bezárta a megosztót
     if(navigator.share){ navigator.share({text}).catch(()=>{}); }
-    else { navigator.clipboard.writeText(text).then(()=>alert("Kimásolva — beillesztheted bárhová! 📋")); }
+    else { navigator.clipboard.writeText(text).then(()=>alert("Kimásolva, beillesztheted bárhová! 📋")); }
   }
 }
 
